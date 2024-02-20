@@ -1,10 +1,13 @@
-import './App.css'
+import { ComboboxDemo } from './components/combobox'
 import { Button } from './components/ui/button'
 
 function App() {
 
   return (
-    <Button>Click me</Button>
+    <>
+      <Button>Click me</Button>
+      <ComboboxDemo />
+    </>
   )
 }
 
