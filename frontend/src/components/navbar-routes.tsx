@@ -15,29 +15,26 @@ export const NavbarRoutes = () => {
 
   return (
     <>
-      <div className="hidden md:block">
-        {/* <SearchInput /> */}
-      </div>
+      <div className="hidden md:block">{/* <SearchInput /> */}</div>
 
-      <div className="flex gap-x-2 ml-auto">
-        
-          <Link to="/">
-            <Button size="sm" variant="ghost">
-              <LogOut className="h-4 w-4 mr-2" />
-              Exit
-            </Button>
-          </Link>
-        
-          <Link to="/teacher/courses">
-            <Button size="sm" variant="ghost">
-              Teacher mode
-            </Button>
-          </Link>
-        
+      <div className="ml-auto flex gap-x-2">
+        <Link to="/">
+          <Button size="sm" variant="ghost">
+            <LogOut className="mr-2 h-4 w-4" />
+            Exit
+          </Button>
+        </Link>
+
+        <Link to="/teacher/courses">
+          <Button size="sm" variant="ghost">
+            Teacher mode
+          </Button>
+        </Link>
+
         {/* <UserButton
           afterSignOutUrl="/"
         /> */}
       </div>
     </>
-  )
-}
+  );
+};
