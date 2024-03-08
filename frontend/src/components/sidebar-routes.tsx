@@ -4,19 +4,6 @@ import { BarChart, Compass, Layout, List } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
 import { useLocation } from "react-router-dom";
 
-const guestRoutes = [
-  {
-    icon: Layout,
-    label: "Dashboard",
-    href: "/",
-  },
-  {
-    icon: Compass,
-    label: "Browse",
-    href: "/search",
-  },
-];
-
 const teacherRoutes = [
   {
     icon: List,
@@ -41,7 +28,7 @@ export const SidebarRoutes = () => {
 
   return (
     <div className="flex flex-col w-full">
-      
+
       {teacherRoutes.map((route) => (
         <SidebarItem
           key={route.href}
