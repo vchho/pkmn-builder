@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <>
       <Link
-        to={`/${3423424242}`}
+        to="/create/"
         className={cn(
           buttonVariants({ variant: "default" }),
           // "text-md tracking-tighter",
@@ -17,7 +17,7 @@ const Home = () => {
 
       <div>Home</div>
     </>
-  )
-}
+  );
+};
 
 export default Home;
