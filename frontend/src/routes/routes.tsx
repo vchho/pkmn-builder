@@ -1,23 +1,28 @@
-
 import Home from "../pages/Home";
-import Team from "../pages/Team";
+import MainContainer from "../pages/MainContainer";
 import Analytics from "../pages/Analytics";
+import TeamsContainer from "../pages/TeamsContainer";
+import TeamCreate from "../pages/TeamCreate";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Team />,
+    element: <MainContainer />,
     children: [
       {
-        path: '/',
-        element: <Home />
+        element: <TeamsContainer />,
+        children: [
+          {
+            path: "/",
+            element: <Home />,
+          },
+          { path: "/create/", element: <TeamCreate /> },
+        ],
       },
       {
-        path: '/analytics',
-        element: <Analytics />
-      }
-    ]
+        path: "/analytics",
+        element: <Analytics />,
+      },
+    ],
   },
-  
-])
+]);
