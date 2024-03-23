@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -47,35 +47,44 @@ export const ShowBack = ({ href }: { href: string }) => {
   );
 };
 
-export const CreateTeamValidator = z.object({
+export const CreateTeamSchema = z.object({
   gameVersion: z.string().min(3).max(150),
+  team: z.array(z.object({ value: z.string() })),
 });
 
-export type CreateTeamValidatorType = z.infer<typeof CreateTeamValidator>;
+export type CreateTeamValidatorType = z.infer<typeof CreateTeamSchema>;
 
 const TeamCreate = () => {
-  const [currentGame, setGame] = useState("1");
+  const [generation, setGeneration] = useState("");
+  const [teams, setTeam] = useState([]);
 
   const form = useForm<CreateTeamValidatorType>({
-    resolver: zodResolver(CreateTeamValidator),
+    resolver: zodResolver(CreateTeamSchema),
     defaultValues: {
       gameVersion: "",
+      // TODO: See if I could use Zustand persist store and load data 🤔
+      team: [],
     },
   });
 
-  const onSubmit = (content: z.infer<typeof CreateTeamValidator>) => {
+  const { fields, append } = useFieldArray({
+    name: "team",
+    control: form.control,
+  });
+
+  const onSubmit = (content: z.infer<typeof CreateTeamSchema>) => {
     console.log(content);
   };
 
   const filteredPokemon = useMemo(() => {
     const filtered = POKEMON.filter((pokemon) =>
-      Number(currentGame) > 0
-        ? Number(pokemon.generation) <= Number(currentGame)
+      Number(generation) > 0
+        ? Number(pokemon.generation) <= Number(generation)
         : true,
     );
 
     return filtered;
-  }, [currentGame]);
+  }, [generation]);
 
   console.log("filteredPokemon", filteredPokemon);
 
@@ -94,7 +103,7 @@ const TeamCreate = () => {
             <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Game Version
             </Label>
-            <Select onValueChange={(value) => setGame(value)}>
+            <Select onValueChange={(value) => setGeneration(value)}>
               <SelectTrigger className="my-5">
                 <SelectValue placeholder="Select a game" />
               </SelectTrigger>
@@ -116,80 +125,28 @@ const TeamCreate = () => {
             </Select>
           </div>
 
-          <Link
-            to="/create/"
-            className={cn(
-              buttonVariants({ variant: "destructive" }),
-              // "text-md tracking-tighter",
-              "my-3",
-            )}
-          >
-            Add Pokemon
-          </Link>
-
           <Separator className="my-5" />
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="my-5">
-              {/* <FormField
-                control={form.control}
-                name="gameVersion"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Game Version</FormLabel>
-                    <FormControl>
-                      <Select onValueChange={field.onChange}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a game" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>Games</SelectLabel>
-                            {GAMES.map((game) => {
-                              return (
-                                <SelectItem
-                                  value={game.generation.toString()}
-                                  key={game.key}
-                                >
-                                  {game.text}
-                                </SelectItem>
-                              );
-                            })}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                  </FormItem>
-                )}
-              /> */}
+              {fields.map((field) => {
+                return (
+                  <Card className="flex h-full flex-col">
+                    <p key={field.value}>{field.value}</p>
+                  </Card>
+                );
+              })}
 
-              {/* <FormField
-                control={form.control}
-                name="gameVersion"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Pokemon</FormLabel>
-                    <FormControl>
-                      <Select onValueChange={field.onChange}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a game" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>Games</SelectLabel>
-                            {GAMES.map((game) => {
-                              return (
-                                <SelectItem value={game.value} key={game.key}>
-                                  {game.text}
-                                </SelectItem>
-                              );
-                            })}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                  </FormItem>
+              <Button
+                onClick={() => append({ value: "Test" })}
+                className={cn(
+                  buttonVariants({ variant: "destructive" }),
+                  // "text-md tracking-tighter",
+                  "my-3",
                 )}
-              /> */}
+                disabled={fields.length === 6 || !Boolean(generation)}
+              >
+                Add Team
+              </Button>
 
               <Button className="my-5">Create</Button>
             </form>
