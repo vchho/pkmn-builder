@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { TPokemon } from "@/constants/pokemon";
 import { ComboboxDemo } from "./combobox";
@@ -11,12 +11,31 @@ const PokemonCard = ({
   field: any;
   filteredPokemon: TPokemon[];
 }) => {
-  const [pokemon, selectPokemon] = useState();
+  const [pokemon, selectPokemon] = useState("");
+  const [realPoke, selectRealPoke] = useState<TPokemon>();
+
+  useEffect(() => {
+    const poke = filteredPokemon.find(
+      (fp) => fp.text.toLowerCase() === pokemon,
+    );
+    console.log("poke", poke);
+    selectRealPoke(poke);
+  }, [pokemon]);
 
   return (
     <Card className="mb-3 flex h-full flex-col">
       <p key={field.value}>{field.value}</p>
-      <ComboboxDemo filteredPokemon={filteredPokemon} />
+      <ComboboxDemo
+        filteredPokemon={filteredPokemon}
+        selectPokemon={selectPokemon}
+      />
+      {realPoke && (
+        <>
+          <p>{realPoke?.text}</p>
+          <p>{realPoke.type}</p>
+          <p>{realPoke.dualtype && realPoke.dualtype}</p>
+        </>
+      )}
     </Card>
   );
 };

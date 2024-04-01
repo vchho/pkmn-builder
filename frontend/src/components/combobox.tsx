@@ -18,33 +18,12 @@ import {
 import { TPokemon } from "@/constants/pokemon";
 import { ScrollArea } from "./ui/scroll-area";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
-
 export function ComboboxDemo({
   filteredPokemon,
+  selectPokemon,
 }: {
   filteredPokemon: TPokemon[];
+  selectPokemon: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
@@ -78,6 +57,7 @@ export function ComboboxDemo({
                   onSelect={(currentValue) => {
                     console.log(currentValue);
                     setValue(currentValue === value ? "" : pokemon.text);
+                    selectPokemon(currentValue);
                     setOpen(false);
                   }}
                 >
