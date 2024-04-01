@@ -6,50 +6,32 @@ export const GAMES: {
 }[] = [
   {
     value: "rby",
-    text: "Red, Blue and Yellow",
+    text: "Gen 1 (Red, Blue and Yellow)",
     key: "1",
     generation: 1,
   },
   {
     value: "gsc",
-    text: "Gold, Silver and Crystal",
+    text: "Gen 2 (Gold, Silver and Crystal)",
     key: "2",
     generation: 2,
   },
   {
     value: "rse",
-    text: "Ruby, Sapphire and Emerald",
+    text: "Gen 3 (Ruby, Sapphire, Emerald, FireRed and LeafGreen)",
     key: "3",
     generation: 3,
   },
   {
-    value: "frlg",
-    text: "FireRed and LeafGreen",
-    key: "4",
-    generation: 3,
-  },
-  {
     value: "dpp",
-    text: "Diamond, Pearl and Platinum",
+    text: "Gen 4 (Diamond, Pearl, Platinum, HeartGold and SoulSilver)",
     key: "5rgrg",
     generation: 4,
   },
   {
-    value: "hgss",
-    text: "HeartGold and SoulSilver",
-    key: "6",
-    generation: 4,
-  },
-  {
     value: "bw",
-    text: "Black and White",
+    text: "Gen 5 (Black, White, Black 2 and White 2)",
     key: "7",
-    generation: 5,
-  },
-  {
-    value: "bw2",
-    text: "Black 2 and White 2",
-    key: "8",
     generation: 5,
   },
 ];
