@@ -15,6 +15,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { TPokemon } from "@/constants/pokemon";
+import { ScrollArea } from "./ui/scroll-area";
 
 const frameworks = [
   {
@@ -39,7 +41,11 @@ const frameworks = [
   },
 ];
 
-export function ComboboxDemo() {
+export function ComboboxDemo({
+  filteredPokemon,
+}: {
+  filteredPokemon: TPokemon[];
+}) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
@@ -53,36 +59,39 @@ export function ComboboxDemo() {
           className="w-[300px] justify-between"
         >
           {value
-            ? frameworks.find((framework) => framework.label === value)?.label
-            : "Select framework..."}
+            ? filteredPokemon.find((pokemon) => pokemon.text === value)?.text
+            : "Select Pokemon..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[300px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
-          <CommandEmpty>No game found.</CommandEmpty>
-          <CommandGroup>
-            {frameworks.map((framework) => (
-              <CommandItem
-                key={framework.value}
-                value={framework.label}
-                onSelect={(currentValue) => {
-                  console.log(currentValue);
-                  setValue(currentValue === value ? "" : framework.label);
-                  setOpen(false);
-                }}
-              >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === framework.label ? "opacity-100" : "opacity-0",
-                  )}
-                />
-                {framework.label}
-              </CommandItem>
-            ))}
-          </CommandGroup>
+          <CommandInput placeholder="Search Pokemon..." />
+          {/* https://github.com/shadcn-ui/ui/issues/607 */}
+          <ScrollArea className="h-[220px] overflow-auto">
+            <CommandEmpty>No game found.</CommandEmpty>
+            <CommandGroup>
+              {filteredPokemon.map((pokemon) => (
+                <CommandItem
+                  key={pokemon.value}
+                  value={pokemon.text}
+                  onSelect={(currentValue) => {
+                    console.log(currentValue);
+                    setValue(currentValue === value ? "" : pokemon.text);
+                    setOpen(false);
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      value === pokemon.text ? "opacity-100" : "opacity-0",
+                    )}
+                  />
+                  {pokemon.text}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </ScrollArea>
         </Command>
       </PopoverContent>
     </Popover>

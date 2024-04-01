@@ -35,6 +35,7 @@ import { GAMES } from "@/constants/games";
 import { Label } from "@/components/ui/label";
 import { useMemo, useState } from "react";
 import { POKEMON } from "@/constants/pokemon";
+import PokemonCard from "@/components/pokemon-card";
 
 export const ShowBack = ({ href }: { href: string }) => {
   return (
@@ -101,15 +102,15 @@ const TeamCreate = () => {
         <CardContent>
           <div className="space-y-2">
             <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              Game Version
+              Game Generation
             </Label>
             <Select onValueChange={(value) => setGeneration(value)}>
               <SelectTrigger className="my-5">
-                <SelectValue placeholder="Select a game" />
+                <SelectValue placeholder="Select a generation" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Games</SelectLabel>
+                  <SelectLabel>Generations</SelectLabel>
                   {GAMES.map((game) => {
                     return (
                       <SelectItem
@@ -128,11 +129,13 @@ const TeamCreate = () => {
           <Separator className="my-5" />
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="my-5">
-              {fields.map((field) => {
+              {fields.map((field, index) => {
                 return (
-                  <Card className="flex h-full flex-col">
-                    <p key={field.value}>{field.value}</p>
-                  </Card>
+                  <PokemonCard
+                    field={field}
+                    filteredPokemon={filteredPokemon}
+                    key={index}
+                  />
                 );
               })}
 
@@ -145,7 +148,7 @@ const TeamCreate = () => {
                 )}
                 disabled={fields.length === 6 || !Boolean(generation)}
               >
-                Add Team
+                Add Pokemon
               </Button>
 
               <Button className="my-5">Create</Button>
