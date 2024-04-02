@@ -35,7 +35,8 @@ export function ComboboxDemo({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[300px] justify-between"
+          // className="w-[300px] justify-between"
+          className="w-{90%} mx-1 justify-between"
         >
           {value
             ? filteredPokemon.find((pokemon) => pokemon.text === value)?.text

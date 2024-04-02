@@ -5,10 +5,10 @@ import { ComboboxDemo } from "./combobox";
 import { Card } from "./ui/card";
 
 const PokemonCard = ({
-  field,
+  // field,
   filteredPokemon,
 }: {
-  field: any;
+  // field: any;
   filteredPokemon: TPokemon[];
 }) => {
   const [pokemon, selectPokemon] = useState("");
@@ -24,7 +24,7 @@ const PokemonCard = ({
 
   return (
     <Card className="mb-3 flex h-full flex-col">
-      <p key={field.value}>{field.value}</p>
+      {/* <p key={field.value}>{field.value}</p> */}
       <ComboboxDemo
         filteredPokemon={filteredPokemon}
         selectPokemon={selectPokemon}

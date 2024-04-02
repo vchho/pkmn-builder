@@ -129,15 +129,17 @@ const TeamCreate = () => {
           <Separator className="my-5" />
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="my-5">
-              {fields.map((field, index) => {
-                return (
-                  <PokemonCard
-                    field={field}
-                    filteredPokemon={filteredPokemon}
-                    key={index}
-                  />
-                );
-              })}
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+                {fields.map((field, index) => {
+                  return (
+                    <PokemonCard
+                      // field={field}
+                      filteredPokemon={filteredPokemon}
+                      key={index}
+                    />
+                  );
+                })}
+              </div>
 
               <Button
                 onClick={() => append({ value: "Test" })}
