@@ -34,6 +34,12 @@ const PokemonCard = ({
           <p>{realPoke?.text}</p>
           <p>{realPoke.type}</p>
           <p>{realPoke.dualtype && realPoke.dualtype}</p>
+          <div
+            // className={`pkm-${getParsedName(name)}`}
+            className={`pkm pkm-${realPoke.text.toLowerCase()}`}
+            role="img"
+            style={{ transform: "scale(1.25)" }}
+          />
         </>
       )}
     </Card>
