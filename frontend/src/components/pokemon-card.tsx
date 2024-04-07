@@ -4,6 +4,7 @@ import { TPokemon } from "@/constants/pokemon";
 import { ComboboxDemo } from "./combobox";
 import { Card } from "./ui/card";
 import PokemonImage from "./pokemon-image";
+import { Badge } from "./ui/badge";
 
 const PokemonCard = ({
   // field,
@@ -32,16 +33,14 @@ const PokemonCard = ({
       />
       {realPoke && (
         <>
-          <p>{realPoke?.text}</p>
-
-          <div className="flex flex-col self-center">
+          <div className="my-5 flex flex-col self-center">
             <div className="flex">
               <PokemonImage pokemonName={realPoke.text} />
             </div>
 
-            <div className="flex">
-              <p>{realPoke.type}</p>{" "}
-              <p>{realPoke.dualtype && realPoke.dualtype}</p>
+            <div className="mt-5 flex">
+              <Badge>{realPoke.type}</Badge>
+              <Badge>{realPoke.dualtype && realPoke.dualtype}</Badge>
             </div>
           </div>
         </>
