@@ -16,7 +16,7 @@ const Home = () => {
         Create Team
       </Link>
 
-      <div>Home</div>
+      <div>Teams</div>
     </Shell>
   );
 };

@@ -4,6 +4,7 @@ import { immer } from "zustand/middleware/immer";
 
 interface AppState {
   teams: any[];
+  addTeamMember: (pokemonId: number) => void;
 }
 
 const useStore = create<AppState>()(
@@ -15,12 +16,17 @@ const useStore = create<AppState>()(
           state.teams.push(team);
         });
       },
+      addTeamMember: (pokemonId: number) => {
+        set((state) => {
+          state.teams.push({ id: pokemonId, moves: [] });
+        });
+      },
     })),
     {
       name: "pkmn-bldr",
       version: 1,
-    }
-  )
+    },
+  ),
 );
 
 export default useStore;
