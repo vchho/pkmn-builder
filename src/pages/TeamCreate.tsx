@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,6 +37,8 @@ import { useMemo, useState } from "react";
 import { POKEMON } from "@/constants/pokemon";
 import PokemonCard from "@/components/pokemon-card";
 
+import useStore from "@/store/store";
+
 export const ShowBack = ({ href }: { href: string }) => {
   return (
     <Link
@@ -58,6 +60,14 @@ export type CreateTeamValidatorType = z.infer<typeof CreateTeamSchema>;
 const TeamCreate = () => {
   const [generation, setGeneration] = useState("");
   const [teams, setTeam] = useState([]);
+
+  const setGenerationStore = useStore((state) => state.setGeneration);
+
+  const { id } = useParams<{ id: string }>();
+  const team = useStore((state) =>
+    state.teams.find((team) => team.teamId === id),
+  );
+  console.log("team", team);
 
   const form = useForm<CreateTeamValidatorType>({
     resolver: zodResolver(CreateTeamSchema),
@@ -104,7 +114,13 @@ const TeamCreate = () => {
             <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Game Generation
             </Label>
-            <Select onValueChange={(value) => setGeneration(value)}>
+            <Select
+              defaultValue={team?.generation ?? team?.generation}
+              onValueChange={(value) => {
+                setGeneration(value);
+                setGenerationStore(value, id!);
+              }}
+            >
               <SelectTrigger className="my-5">
                 <SelectValue placeholder="Select a generation" />
               </SelectTrigger>
@@ -116,6 +132,7 @@ const TeamCreate = () => {
                       <SelectItem
                         value={game.generation.toString()}
                         key={game.key}
+                        onClick={() => console.log(game.generation.toString())}
                       >
                         {game.text}
                       </SelectItem>
