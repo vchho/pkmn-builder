@@ -2,20 +2,15 @@ import { create } from "zustand";
 import { persist, devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-interface AppState {
-  teams: any[];
-  addTeamMember: (pokemonId: number) => void;
-  addTeam: () => void;
-}
+import { AppState } from "@/types/AppState";
 
 const useStore = create<AppState>()(
   devtools(
     persist(
       immer((set) => ({
         teams: [],
-        addTeam: () => {
-          console.log("hit in zustand");
-          const teamState = { id: 123, generation: "" };
+        addTeam: (teamId: string) => {
+          const teamState = { teamId: teamId, generation: "", team: [] };
 
           set((state) => {
             state.teams.push(teamState);
@@ -23,7 +18,27 @@ const useStore = create<AppState>()(
         },
         addTeamMember: (pokemonId: number) => {
           set((state) => {
-            state.teams.push({ id: pokemonId, moves: [] });
+            // state.teams.push({ teamId: pokemonId, moves: [] });
+          });
+        },
+        deleteTeam: (teamId: string) => {
+          set((state) => {
+            // state.teams.map((team) => );
+          });
+        },
+        // Development function
+        nukeTeams: () => {
+          set((state) => {
+            state.teams = [];
+          });
+        },
+        setGeneration: (generation: string, teamId: string) => {
+          set((state) => {
+            state.teams.forEach((team) => {
+              if (teamId === team.teamId) {
+                team.generation = generation;
+              }
+            });
           });
         },
       })),
