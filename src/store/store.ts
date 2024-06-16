@@ -16,9 +16,13 @@ const useStore = create<AppState>()(
             state.teams.push(teamState);
           });
         },
-        addTeamMember: (pokemonId: number) => {
+        addTeamMember: (teamId: string, pokemon: any) => {
+          console.log({ teamId, pokemon });
           set((state) => {
-            // state.teams.push({ teamId: pokemonId, moves: [] });
+            const currentTeam = state.teams.find(
+              (team) => team.teamId === teamId,
+            );
+            currentTeam?.team.push(pokemon);
           });
         },
         deleteTeam: (teamId: string) => {

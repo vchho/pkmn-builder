@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/select";
 import { GAMES } from "@/constants/games";
 import { Label } from "@/components/ui/label";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { POKEMON } from "@/constants/pokemon";
 import PokemonCard from "@/components/pokemon-card";
 
@@ -56,7 +56,7 @@ export const CreateTeamSchema = z.object({
 });
 
 export type CreateTeamValidatorType = z.infer<typeof CreateTeamSchema>;
-
+// TODO: Have state pull in information from Zustand for teams
 const TeamCreate = () => {
   const [generation, setGeneration] = useState("");
   const [teams, setTeam] = useState([]);
@@ -64,10 +64,19 @@ const TeamCreate = () => {
   const setGenerationStore = useStore((state) => state.setGeneration);
 
   const { id } = useParams<{ id: string }>();
-  const team = useStore((state) =>
+  const currentTeam = useStore((state) =>
     state.teams.find((team) => team.teamId === id),
   );
-  console.log("team", team);
+  // console.log("team", team);
+
+  // store function must take in a teamId, and a pokemon object
+  // store function must find the current team, and insert that pokemon into that team
+
+  useEffect(() => {
+    if (currentTeam?.generation) {
+      setGeneration(currentTeam.generation);
+    }
+  }, []);
 
   const form = useForm<CreateTeamValidatorType>({
     resolver: zodResolver(CreateTeamSchema),
@@ -87,6 +96,10 @@ const TeamCreate = () => {
     console.log(content);
   };
 
+  const addPokemon = () => {
+    append({ value: "Test" });
+  };
+
   const filteredPokemon = useMemo(() => {
     const filtered = POKEMON.filter((pokemon) =>
       Number(generation) > 0
@@ -96,8 +109,6 @@ const TeamCreate = () => {
 
     return filtered;
   }, [generation]);
-
-  console.log("filteredPokemon", filteredPokemon);
 
   return (
     <Shell>
@@ -115,7 +126,7 @@ const TeamCreate = () => {
               Game Generation
             </Label>
             <Select
-              defaultValue={team?.generation ?? team?.generation}
+              defaultValue={currentTeam?.generation ?? currentTeam?.generation}
               onValueChange={(value) => {
                 setGeneration(value);
                 setGenerationStore(value, id!);
@@ -147,7 +158,7 @@ const TeamCreate = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="my-5">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-                {fields.map((field, index) => {
+                {fields.map((_, index) => {
                   return (
                     <PokemonCard
                       // field={field}
@@ -159,7 +170,7 @@ const TeamCreate = () => {
               </div>
 
               <Button
-                onClick={() => append({ value: "Test" })}
+                onClick={() => addPokemon()}
                 className={cn(
                   buttonVariants({ variant: "destructive" }),
                   // "text-md tracking-tighter",
