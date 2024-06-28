@@ -38,6 +38,7 @@ import { POKEMON } from "@/constants/pokemon";
 import PokemonCard from "@/components/pokemon-card";
 
 import useStore from "@/store/store";
+import PokemonCard2 from "@/components/pokemon-card2";
 
 export const ShowBack = ({ href }: { href: string }) => {
   return (
@@ -63,15 +64,17 @@ const TeamCreate = () => {
 
   const setGenerationStore = useStore((state) => state.setGeneration);
 
-  const { id } = useParams<{ id: string }>();
-  const currentTeam = useStore((state) =>
-    state.teams.find((team) => team.teamId === id),
-  );
+  const { id } = useParams() as { id: string };
+  const currentTeam = useStore((state) => {
+    return state.teams.find((team) => team.teamId === id);
+  });
   // console.log("team", team);
 
   // store function must take in a teamId, and a pokemon object
   // store function must find the current team, and insert that pokemon into that team
 
+  // maybe rework how pokemon are added
+  // on add pokemon button press, a modal pops up with selectable pokemon
   useEffect(() => {
     if (currentTeam?.generation) {
       setGeneration(currentTeam.generation);
@@ -167,6 +170,23 @@ const TeamCreate = () => {
                     />
                   );
                 })}
+                {currentTeam && currentTeam.team.length > 0 ? (
+                  currentTeam.team.map((team, index) => {
+                    return (
+                      <div>
+                        <p>TYPE: {team.type}</p>
+                        <p>Name: {team.text}</p>
+                        <PokemonCard2
+                          filteredPokemon={filteredPokemon}
+                          pokemonId={team.value}
+                          key={index}
+                        />
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p>no stuff</p>
+                )}
               </div>
 
               <Button
