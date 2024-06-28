@@ -1,19 +1,22 @@
 import { useState, useEffect } from "react";
 
-import { TPokemon } from "@/constants/pokemon";
+import { POKEMAP, TPokemon } from "@/constants/pokemon";
 import { ComboboxDemo } from "./combobox";
+import { ComboboxDemo2 } from "./combobox2";
 import { Card } from "./ui/card";
 import PokemonImage from "./pokemon-image";
 import { Badge } from "./ui/badge";
 import { useParams } from "react-router-dom";
 import useStore from "@/store/store";
 
-const PokemonCard = ({
+const PokemonCard2 = ({
   // field,
   filteredPokemon,
+  pokemonId,
 }: {
   // field: any;
   filteredPokemon: TPokemon[];
+  pokemonId: number;
 }) => {
   const [pokemon, selectPokemon] = useState("");
   const [realPoke, selectRealPoke] = useState<TPokemon>();
@@ -22,7 +25,9 @@ const PokemonCard = ({
 
   const addTeamMember = useStore((state) => state.addTeamMember);
 
-  console.log("does id show in pokemon card?", id);
+  console.log("pokemonId", pokemonId);
+  const pokemonOne = POKEMAP.get(pokemonId);
+  console.log("pokemonOne", pokemonOne);
 
   useEffect(() => {
     const poke = filteredPokemon.find(
@@ -42,16 +47,16 @@ const PokemonCard = ({
         filteredPokemon={filteredPokemon}
         selectPokemon={selectPokemon}
       />
-      {realPoke && (
+      {pokemonOne && (
         <>
           <div className="my-5 flex flex-col self-center">
             <div className="flex">
-              <PokemonImage pokemonName={realPoke.text} />
+              <PokemonImage pokemonName={pokemonOne?.text!} />
             </div>
 
             <div className="mt-5 flex">
-              <Badge>{realPoke.type}</Badge>
-              <Badge>{realPoke.dualtype && realPoke.dualtype}</Badge>
+              <Badge>{pokemonOne.type}</Badge>
+              <Badge>{pokemonOne.dualtype && pokemonOne.dualtype}</Badge>
             </div>
           </div>
         </>
@@ -60,4 +65,4 @@ const PokemonCard = ({
   );
 };
 
-export default PokemonCard;
+export default PokemonCard2;
