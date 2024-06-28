@@ -8,15 +8,18 @@ import PokemonImage from "./pokemon-image";
 import { Badge } from "./ui/badge";
 import { useParams } from "react-router-dom";
 import useStore from "@/store/store";
+import { Button } from "./ui/button";
 
 const PokemonCard2 = ({
   // field,
   filteredPokemon,
   pokemonId,
+  orderIndex,
 }: {
   // field: any;
   filteredPokemon: TPokemon[];
   pokemonId: number;
+  orderIndex: number;
 }) => {
   const [pokemon, selectPokemon] = useState("");
   const [realPoke, selectRealPoke] = useState<TPokemon>();
@@ -24,10 +27,15 @@ const PokemonCard2 = ({
   const { id } = useParams() as { id: string };
 
   const addTeamMember = useStore((state) => state.addTeamMember);
+  const deleteTeamMember = useStore((state) => state.deleteTeamMember);
 
   console.log("pokemonId", pokemonId);
   const pokemonOne = POKEMAP.get(pokemonId);
   console.log("pokemonOne", pokemonOne);
+
+  const handleDeleteTeamMember = (teamId: string, orderIndex: number) => {
+    deleteTeamMember(teamId, orderIndex);
+  };
 
   useEffect(() => {
     const poke = filteredPokemon.find(
@@ -57,6 +65,14 @@ const PokemonCard2 = ({
             <div className="mt-5 flex">
               <Badge>{pokemonOne.type}</Badge>
               <Badge>{pokemonOne.dualtype && pokemonOne.dualtype}</Badge>
+            </div>
+            <div className="mt-5 flex">
+              <Button
+                variant={"destructive"}
+                onClick={() => handleDeleteTeamMember(id, orderIndex)}
+              >
+                Delete
+              </Button>
             </div>
           </div>
         </>

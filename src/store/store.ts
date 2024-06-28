@@ -30,6 +30,13 @@ const useStore = create<AppState>()(
             // state.teams.map((team) => );
           });
         },
+        deleteTeamMember: (teamId: string, pokemonIndex: number) => {
+          set((state) => {
+            state.teams
+              .find((team) => (team.teamId = teamId))
+              ?.team.splice(pokemonIndex, 1);
+          });
+        },
         // Development function
         nukeTeams: () => {
           set((state) => {
