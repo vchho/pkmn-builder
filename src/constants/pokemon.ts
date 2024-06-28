@@ -5104,3 +5104,5 @@ export const POKEMON: TPokemon[] = [
     generation: 5,
   },
 ]
+
+export const POKEMAP = new Map(POKEMON.map((poke) => [poke.value, poke]));
