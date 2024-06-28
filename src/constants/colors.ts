@@ -1,4 +1,4 @@
-import { Type } from "./moves";
+import { Type } from "@/types/move";
 
 export type TypeColor = {
   [key in Type]: string;

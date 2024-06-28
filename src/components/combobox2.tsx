@@ -18,7 +18,7 @@ import {
 import { TPokemon } from "@/constants/pokemon";
 import { ScrollArea } from "./ui/scroll-area";
 
-export function ComboboxDemo({
+export function ComboboxDemo2({
   filteredPokemon,
   selectPokemon,
 }: {
