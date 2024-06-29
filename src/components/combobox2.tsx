@@ -21,12 +21,20 @@ import { ScrollArea } from "./ui/scroll-area";
 export function ComboboxDemo2({
   filteredPokemon,
   selectPokemon,
+  pokemonOne,
 }: {
   filteredPokemon: TPokemon[];
   selectPokemon: React.Dispatch<React.SetStateAction<string>>;
+  pokemonOne: any;
 }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
+
+  React.useEffect(() => {
+    if (pokemonOne) {
+      setValue(pokemonOne.text);
+    }
+  }, []);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

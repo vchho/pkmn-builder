@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 import { POKEMAP, TPokemon } from "@/constants/pokemon";
-import { ComboboxDemo } from "./combobox";
 import { ComboboxDemo2 } from "./combobox2";
 import { Card } from "./ui/card";
 import PokemonImage from "./pokemon-image";
@@ -51,9 +50,10 @@ const PokemonCard2 = ({
 
   return (
     <Card className="mb-3 flex h-full flex-col">
-      <ComboboxDemo
+      <ComboboxDemo2
         filteredPokemon={filteredPokemon}
         selectPokemon={selectPokemon}
+        pokemonOne={pokemonOne}
       />
       {pokemonOne && (
         <>
