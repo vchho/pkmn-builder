@@ -8,29 +8,31 @@ import { Badge } from "./ui/badge";
 import { useParams } from "react-router-dom";
 import useStore from "@/store/store";
 import { Button } from "./ui/button";
+import { NatureSelect } from "./nature-select";
+import NATURES from "@/constants/natures";
 
 const PokemonCard2 = ({
   // field,
   filteredPokemon,
   pokemonId,
   orderIndex,
+  pokeDetail,
 }: {
   // field: any;
   filteredPokemon: TPokemon[];
   pokemonId: number;
   orderIndex: number;
+  pokeDetail?: any;
 }) => {
   const [pokemon, selectPokemon] = useState("");
   const [realPoke, selectRealPoke] = useState<TPokemon>();
 
   const { id } = useParams() as { id: string };
 
-  const addTeamMember = useStore((state) => state.addTeamMember);
+  const addPokemonToSlot = useStore((state) => state.addPokemonToSlot);
   const deleteTeamMember = useStore((state) => state.deleteTeamMember);
 
-  console.log("pokemonId", pokemonId);
   const pokemonOne = POKEMAP.get(pokemonId);
-  console.log("pokemonOne", pokemonOne);
 
   const handleDeleteTeamMember = (teamId: string, orderIndex: number) => {
     deleteTeamMember(teamId, orderIndex);
@@ -43,8 +45,9 @@ const PokemonCard2 = ({
     // console.log("poke", poke);
     selectRealPoke(poke);
 
-    if (id && poke) {
-      addTeamMember(id, poke);
+    if (poke) {
+      console.log("hit pokemoncard 2");
+      addPokemonToSlot(id, orderIndex, poke.value);
     }
   }, [pokemon]);
 
@@ -59,13 +62,32 @@ const PokemonCard2 = ({
         <>
           <div className="my-5 flex flex-col self-center">
             <div className="flex">
-              <PokemonImage pokemonName={pokemonOne?.text!} />
+              <PokemonImage pokemonName={pokemonOne.text} />
             </div>
 
             <div className="mt-5 flex">
-              <Badge>{pokemonOne.type}</Badge>
-              <Badge>{pokemonOne.dualtype && pokemonOne.dualtype}</Badge>
+              {pokemonOne.previousType ? (
+                <>
+                  <Badge>{pokemonOne.previousType}</Badge>
+                  {!!pokemonOne.previousDualType && (
+                    <Badge>{pokemonOne.previousDualType}</Badge>
+                  )}
+                </>
+              ) : (
+                <>
+                  <Badge>{pokemonOne.type}</Badge>
+                  {!!pokemonOne.dualtype && (
+                    <Badge>{pokemonOne.dualtype}</Badge>
+                  )}
+                </>
+              )}
             </div>
+            <NatureSelect
+              natures={NATURES}
+              teamId={id}
+              pokemonIndex={orderIndex}
+              nature={pokeDetail?.nature}
+            />
             <div className="mt-5 flex">
               <Button
                 variant={"destructive"}

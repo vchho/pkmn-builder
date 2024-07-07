@@ -13,13 +13,7 @@ import { Link, useParams } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -63,11 +57,15 @@ const TeamCreate = () => {
   const [teams, setTeam] = useState([]);
 
   const setGenerationStore = useStore((state) => state.setGeneration);
+  const addTeamMember = useStore((state) => state.addTeamMember);
 
   const { id } = useParams() as { id: string };
   const currentTeam = useStore((state) => {
     return state.teams.find((team) => team.teamId === id);
   });
+
+  const teamTotal = currentTeam?.team.length;
+  console.log("teamTotal", teamTotal);
   // console.log("team", team);
 
   // store function must take in a teamId, and a pokemon object
@@ -90,7 +88,7 @@ const TeamCreate = () => {
     },
   });
 
-  const { fields, append } = useFieldArray({
+  const { fields } = useFieldArray({
     name: "team",
     control: form.control,
   });
@@ -100,7 +98,7 @@ const TeamCreate = () => {
   };
 
   const addPokemon = () => {
-    append({ value: "Test" });
+    addTeamMember(id);
   };
 
   const filteredPokemon = useMemo(() => {
@@ -161,27 +159,16 @@ const TeamCreate = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="my-5">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-                {fields.map((_, index) => {
-                  return (
-                    <PokemonCard
-                      // field={field}
-                      filteredPokemon={filteredPokemon}
-                      key={index}
-                    />
-                  );
-                })}
                 {currentTeam && currentTeam.team.length > 0 ? (
                   currentTeam.team.map((team, index) => {
                     return (
-                      <div>
-                        <p>TYPE: {team.type}</p>
-                        <p>Name: {team.text}</p>
-                        <PokemonCard2
-                          filteredPokemon={filteredPokemon}
-                          pokemonId={team.value}
-                          key={index}
-                        />
-                      </div>
+                      <PokemonCard2
+                        filteredPokemon={filteredPokemon}
+                        pokemonId={team.id}
+                        orderIndex={index}
+                        pokeDetail={team}
+                        key={index}
+                      />
                     );
                   })
                 ) : (
@@ -196,7 +183,9 @@ const TeamCreate = () => {
                   // "text-md tracking-tighter",
                   "my-3",
                 )}
-                disabled={fields.length === 6 || !Boolean(generation)}
+                disabled={
+                  fields.length === 6 || !Boolean(generation) || teamTotal === 6
+                }
               >
                 Add Pokemon
               </Button>
