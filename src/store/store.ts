@@ -16,13 +16,60 @@ const useStore = create<AppState>()(
             state.teams.push(teamState);
           });
         },
-        addTeamMember: (teamId: string, pokemon: any) => {
-          console.log({ teamId, pokemon });
+        // TODO: add team member based on object
+        // TODO: create update team member where they can add or update pokemon
+        addTeamMember: (teamId: string) => {
           set((state) => {
             const currentTeam = state.teams.find(
               (team) => team.teamId === teamId,
             );
-            currentTeam?.team.push(pokemon);
+
+            const updatedPokemon = {
+              moves: [],
+            };
+            currentTeam?.team.push(updatedPokemon);
+          });
+        },
+        addPokemonToSlot: (
+          teamId: string,
+          pokemonIndex?: number,
+          poke?: any,
+        ) => {
+          set((state) => {
+            const currentTeam = state.teams.find(
+              (team) => team.teamId === teamId,
+            );
+
+            let currentPokemon = currentTeam?.team[pokemonIndex!];
+
+            let asdf = {
+              ...currentPokemon,
+              id: poke,
+            };
+
+            console.log("asdf", asdf);
+            currentTeam!.team[pokemonIndex!] = asdf;
+          });
+        },
+        addNatureToSlot: (
+          teamId: string,
+          nature: string,
+          pokemonIndex?: number,
+        ) => {
+          console.log({ teamId, nature, pokemonIndex });
+          set((state) => {
+            const currentTeam = state.teams.find(
+              (team) => team.teamId === teamId,
+            );
+
+            let currentPokemon = currentTeam?.team[pokemonIndex!];
+            let updatedInfo = {
+              ...currentPokemon,
+              // TODO: resesarch why text is lowercased
+              nature: nature.charAt(0).toUpperCase() + nature.slice(1),
+            };
+
+            currentTeam!.team[pokemonIndex!] = updatedInfo;
           });
         },
         deleteTeam: (teamId: string) => {
