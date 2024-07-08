@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { POKEMAP, TPokemon } from "@/constants/pokemon";
 import { ComboboxDemo2 } from "./combobox2";
@@ -12,20 +12,17 @@ import { NatureSelect } from "./nature-select";
 import NATURES from "@/constants/natures";
 
 const PokemonCard2 = ({
-  // field,
   filteredPokemon,
   pokemonId,
   orderIndex,
   pokeDetail,
 }: {
-  // field: any;
   filteredPokemon: TPokemon[];
   pokemonId: number;
   orderIndex: number;
   pokeDetail?: any;
 }) => {
   const [pokemon, selectPokemon] = useState("");
-  const [realPoke, selectRealPoke] = useState<TPokemon>();
 
   const { id } = useParams() as { id: string };
 
@@ -42,8 +39,6 @@ const PokemonCard2 = ({
     const poke = filteredPokemon.find(
       (fp) => fp.text.toLowerCase() === pokemon,
     );
-    // console.log("poke", poke);
-    selectRealPoke(poke);
 
     if (poke) {
       console.log("hit pokemoncard 2");
@@ -86,7 +81,7 @@ const PokemonCard2 = ({
               natures={NATURES}
               teamId={id}
               pokemonIndex={orderIndex}
-              nature={pokeDetail?.nature}
+              nature={pokeDetail?.nature ?? ""}
             />
             <div className="mt-5 flex">
               <Button

@@ -14,7 +14,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
   Select,
@@ -27,11 +26,11 @@ import {
 } from "@/components/ui/select";
 import { GAMES } from "@/constants/games";
 import { Label } from "@/components/ui/label";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { POKEMON } from "@/constants/pokemon";
-import PokemonCard from "@/components/pokemon-card";
 
 import useStore from "@/store/store";
+import { useShallow } from "zustand/react/shallow";
 import PokemonCard2 from "@/components/pokemon-card2";
 
 export const ShowBack = ({ href }: { href: string }) => {
@@ -54,25 +53,21 @@ export type CreateTeamValidatorType = z.infer<typeof CreateTeamSchema>;
 // TODO: Have state pull in information from Zustand for teams
 const TeamCreate = () => {
   const [generation, setGeneration] = useState("");
-  const [teams, setTeam] = useState([]);
 
   const setGenerationStore = useStore((state) => state.setGeneration);
-  const addTeamMember = useStore((state) => state.addTeamMember);
+  const addTeamMember = useStore(
+    useCallback((state) => state.addTeamMember, []),
+  );
 
   const { id } = useParams() as { id: string };
-  const currentTeam = useStore((state) => {
-    return state.teams.find((team) => team.teamId === id);
-  });
+  const currentTeam = useStore(
+    useShallow((state) => {
+      return state.teams.find((team) => team.teamId === id);
+    }),
+  );
 
   const teamTotal = currentTeam?.team.length;
-  console.log("teamTotal", teamTotal);
-  // console.log("team", team);
 
-  // store function must take in a teamId, and a pokemon object
-  // store function must find the current team, and insert that pokemon into that team
-
-  // maybe rework how pokemon are added
-  // on add pokemon button press, a modal pops up with selectable pokemon
   useEffect(() => {
     if (currentTeam?.generation) {
       setGeneration(currentTeam.generation);
@@ -172,7 +167,7 @@ const TeamCreate = () => {
                     );
                   })
                 ) : (
-                  <p>no stuff</p>
+                  <p>No Pokemon selected.</p>
                 )}
               </div>
 

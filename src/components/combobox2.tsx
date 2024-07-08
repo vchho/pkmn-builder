@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -24,17 +24,17 @@ export function ComboboxDemo2({
   pokemonOne,
 }: {
   filteredPokemon: TPokemon[];
-  selectPokemon: React.Dispatch<React.SetStateAction<string>>;
+  selectPokemon: Dispatch<SetStateAction<string>>;
   pokemonOne: any;
 }) {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [open, setOpen] = useState(false);
+  const [value, setPokemonName] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (pokemonOne) {
-      setValue(pokemonOne.text);
+      setPokemonName(pokemonOne.text);
     }
-  }, []);
+  }, [pokemonOne]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -65,7 +65,7 @@ export function ComboboxDemo2({
                   value={pokemon.text}
                   onSelect={(currentValue) => {
                     console.log("current VAlue in combo box", currentValue);
-                    setValue(currentValue === value ? "" : pokemon.text);
+                    setPokemonName(currentValue === value ? "" : pokemon.text);
                     selectPokemon(currentValue);
                     setOpen(false);
                   }}

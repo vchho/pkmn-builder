@@ -40,7 +40,7 @@ export function NatureSelect({
     if (nature) {
       setValue(nature);
     }
-  }, []);
+  }, [nature]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

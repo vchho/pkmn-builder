@@ -47,7 +47,6 @@ const useStore = create<AppState>()(
               id: poke,
             };
 
-            console.log("asdf", asdf);
             currentTeam!.team[pokemonIndex!] = asdf;
           });
         },
@@ -80,7 +79,7 @@ const useStore = create<AppState>()(
         deleteTeamMember: (teamId: string, pokemonIndex: number) => {
           set((state) => {
             state.teams
-              .find((team) => (team.teamId = teamId))
+              .find((team) => team.teamId === teamId)
               ?.team.splice(pokemonIndex, 1);
           });
         },
