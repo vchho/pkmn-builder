@@ -14,7 +14,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
-import { Separator } from "@/components/ui/separator";
 import {
   Select,
   SelectContent,
@@ -32,6 +31,7 @@ import { POKEMON } from "@/constants/pokemon";
 import useStore from "@/store/store";
 import { useShallow } from "zustand/react/shallow";
 import PokemonCard2 from "@/components/pokemon-card2";
+import { AccordionDemo } from "@/components/accordion-demo";
 
 export const ShowBack = ({ href }: { href: string }) => {
   return (
@@ -78,7 +78,6 @@ const TeamCreate = () => {
     resolver: zodResolver(CreateTeamSchema),
     defaultValues: {
       gameVersion: "",
-      // TODO: See if I could use Zustand persist store and load data 🤔
       team: [],
     },
   });
@@ -150,7 +149,7 @@ const TeamCreate = () => {
             </Select>
           </div>
 
-          <Separator className="my-5" />
+          {/* <Separator className="my-5" /> */}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="my-5">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
@@ -170,6 +169,7 @@ const TeamCreate = () => {
                   <p>No Pokemon selected.</p>
                 )}
               </div>
+              <AccordionDemo />
 
               <Button
                 onClick={() => addPokemon()}
