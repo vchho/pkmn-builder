@@ -3,6 +3,7 @@ import { persist, devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 import { AppState } from "@/types/AppState";
+import { PokemonDetail } from "../types/AppState";
 
 const useStore = create<AppState>()(
   devtools(
@@ -27,6 +28,7 @@ const useStore = create<AppState>()(
             const updatedPokemon = {
               moves: [],
             };
+            // @ts-ignore
             currentTeam?.team.push(updatedPokemon);
           });
         },
@@ -47,6 +49,7 @@ const useStore = create<AppState>()(
               id: poke,
             };
 
+            // @ts-ignore
             currentTeam!.team[pokemonIndex!] = asdf;
           });
         },
@@ -68,7 +71,23 @@ const useStore = create<AppState>()(
               nature: nature.charAt(0).toUpperCase() + nature.slice(1),
             };
 
+            // @ts-ignore
             currentTeam!.team[pokemonIndex!] = updatedInfo;
+          });
+        },
+        changeTeamMemberInfo: (
+          teamId: string,
+          pokemonIndex: number,
+          detail: PokemonDetail,
+        ) => {
+          set((state) => {
+            const currentTeam = state.teams.find(
+              (team) => team.teamId === teamId,
+            );
+
+            if (currentTeam) {
+              currentTeam.team[pokemonIndex] = { ...detail };
+            }
           });
         },
         deleteTeam: (teamId: string) => {
