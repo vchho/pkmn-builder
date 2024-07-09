@@ -23,7 +23,7 @@ export function AbilitiesSelect({
   abilities,
   teamId,
   pokemonIndex,
-  nature,
+  ability,
   pokeDetail,
 }: {
   abilities: {
@@ -34,7 +34,7 @@ export function AbilitiesSelect({
   }[];
   teamId: string;
   pokemonIndex: number;
-  nature?: string;
+  ability?: string;
   pokeDetail: PokemonDetail;
 }) {
   const [open, setOpen] = useState(false);
@@ -43,10 +43,10 @@ export function AbilitiesSelect({
   const changeTeamMemberInfo = useStore((state) => state.changeTeamMemberInfo);
 
   useEffect(() => {
-    if (nature) {
-      setValue(nature);
+    if (ability) {
+      setValue(ability);
     }
-  }, [nature]);
+  }, [ability]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
