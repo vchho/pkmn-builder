@@ -15,20 +15,23 @@ const teacherRoutes = [
     label: "Analytics",
     href: "/analytics",
   },
-]
+  {
+    icon: BarChart,
+    label: "Exporter",
+    href: "/exporter",
+  },
+];
 
 export const SidebarRoutes = () => {
   // const pathname = usePathname();
   const location = useLocation();
-
 
   // const isTeacherPage = location.pathname?.includes("/teacher");
 
   // const routes = isTeacherPage ? teacherRoutes : guestRoutes;
 
   return (
-    <div className="flex flex-col w-full">
-
+    <div className="flex w-full flex-col">
       {teacherRoutes.map((route) => (
         <SidebarItem
           key={route.href}
@@ -38,5 +41,5 @@ export const SidebarRoutes = () => {
         />
       ))}
     </div>
-  )
-}
+  );
+};
