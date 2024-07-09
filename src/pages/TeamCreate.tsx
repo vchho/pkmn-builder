@@ -178,9 +178,7 @@ const TeamCreate = () => {
                   // "text-md tracking-tighter",
                   "my-3",
                 )}
-                disabled={
-                  fields.length === 6 || !Boolean(generation) || teamTotal === 6
-                }
+                disabled={!Boolean(generation) || teamTotal === 6}
               >
                 Add Pokemon
               </Button>
