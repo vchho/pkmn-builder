@@ -34,11 +34,11 @@ export function MoveSelect({
   pokemonIndex: number;
   pokeDetail: PokemonDetail;
   moveIndex: number;
-  moveInformation: any;
+  moveInformation: number[];
   item?: string;
 }) {
   const [open, setOpen] = useState(false);
-  const [setMove, setValue] = useState("");
+  const [existingMove, setMove] = useState("");
 
   const changeTeamMemberInfo = useStore((state) => state.changeTeamMemberInfo);
 
@@ -47,7 +47,7 @@ export function MoveSelect({
       const foundMove = moves.find((move) => String(move.id) === item);
 
       if (foundMove) {
-        setValue(foundMove.name);
+        setMove(foundMove.name);
       }
     }
   }, [item]);
@@ -62,15 +62,15 @@ export function MoveSelect({
           // className="w-{90%} mx-1 justify-between"
           className="w-full justify-between"
         >
-          {setMove
-            ? moves.find((item) => item.name === setMove)?.name
-            : "Select Move"}
+          {existingMove
+            ? moves.find((item) => item.name === existingMove)?.name
+            : "Select a move"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[300px] p-0">
         <Command>
-          <CommandInput placeholder="Search Item" />
+          <CommandInput placeholder="Search for a move" />
           {/* https://github.com/shadcn-ui/ui/issues/607 */}
           <ScrollArea className="h-[220px] overflow-auto">
             <CommandEmpty>No move found.</CommandEmpty>
@@ -80,9 +80,10 @@ export function MoveSelect({
                   key={move.name}
                   value={String(move.id)}
                   onSelect={() => {
-                    setValue(move.name);
+                    setMove(move.name);
                     changeTeamMemberInfo(teamId, pokemonIndex, {
                       ...pokeDetail,
+                      // Adding move based on the set moveIndex so we can appropriately set our moves
                       moves: [
                         ...moveInformation.slice(0, moveIndex),
                         move.id,
@@ -95,7 +96,7 @@ export function MoveSelect({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      setMove === move.name ? "opacity-100" : "opacity-0",
+                      existingMove === move.name ? "opacity-100" : "opacity-0",
                     )}
                   />
                   {move.name}
