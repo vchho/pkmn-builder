@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 import { POKEMAP, TPokemon } from "@/constants/pokemon";
 import { ComboboxDemo2 } from "./combobox2";
@@ -10,6 +10,7 @@ import useStore from "@/store/store";
 import { Button } from "./ui/button";
 import { NatureSelect } from "./nature-select";
 import NATURES from "@/constants/natures";
+import { Label } from "@/components/ui/label";
 
 const PokemonCard2 = ({
   filteredPokemon,
@@ -41,7 +42,6 @@ const PokemonCard2 = ({
     );
 
     if (poke) {
-      console.log("hit pokemoncard 2");
       addPokemonToSlot(id, orderIndex, poke.value);
     }
   }, [pokemon]);
@@ -55,12 +55,13 @@ const PokemonCard2 = ({
       />
       {pokemonOne && (
         <>
-          <div className="my-5 flex flex-col self-center">
-            <div className="flex">
+          {/* <div className="my-5 flex flex-col self-center"> */}
+          <div className="my-5 flex flex-col ">
+            <div className="m-2 flex ">
               <PokemonImage pokemonName={pokemonOne.text} />
             </div>
 
-            <div className="mt-5 flex">
+            <div className="my-2 mt-5 flex justify-center">
               {pokemonOne.previousType ? (
                 <>
                   <Badge>{pokemonOne.previousType}</Badge>
@@ -77,13 +78,21 @@ const PokemonCard2 = ({
                 </>
               )}
             </div>
+            <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Nature
+            </Label>
             <NatureSelect
               natures={NATURES}
               teamId={id}
               pokemonIndex={orderIndex}
               nature={pokeDetail?.nature ?? ""}
             />
-            <div className="mt-5 flex">
+
+            <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Moves
+            </Label>
+
+            <div className="mt-5 flex justify-center">
               <Button
                 variant={"destructive"}
                 onClick={() => handleDeleteTeamMember(id, orderIndex)}

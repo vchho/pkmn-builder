@@ -15,7 +15,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { TPokemon } from "@/constants/pokemon";
 import { ScrollArea } from "./ui/scroll-area";
 import useStore from "@/store/store";
 import { Nature } from "@/types/nature";
