@@ -13,14 +13,7 @@ import { Link, useParams } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import {
   Select,
@@ -33,11 +26,11 @@ import {
 } from "@/components/ui/select";
 import { GAMES } from "@/constants/games";
 import { Label } from "@/components/ui/label";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { POKEMON } from "@/constants/pokemon";
-import PokemonCard from "@/components/pokemon-card";
 
 import useStore from "@/store/store";
+import { useShallow } from "zustand/react/shallow";
 import PokemonCard2 from "@/components/pokemon-card2";
 
 export const ShowBack = ({ href }: { href: string }) => {
@@ -60,21 +53,21 @@ export type CreateTeamValidatorType = z.infer<typeof CreateTeamSchema>;
 // TODO: Have state pull in information from Zustand for teams
 const TeamCreate = () => {
   const [generation, setGeneration] = useState("");
-  const [teams, setTeam] = useState([]);
 
   const setGenerationStore = useStore((state) => state.setGeneration);
+  const addTeamMember = useStore(
+    useCallback((state) => state.addTeamMember, []),
+  );
 
   const { id } = useParams() as { id: string };
-  const currentTeam = useStore((state) => {
-    return state.teams.find((team) => team.teamId === id);
-  });
-  // console.log("team", team);
+  const currentTeam = useStore(
+    useShallow((state) => {
+      return state.teams.find((team) => team.teamId === id);
+    }),
+  );
 
-  // store function must take in a teamId, and a pokemon object
-  // store function must find the current team, and insert that pokemon into that team
+  const teamTotal = currentTeam?.team.length;
 
-  // maybe rework how pokemon are added
-  // on add pokemon button press, a modal pops up with selectable pokemon
   useEffect(() => {
     if (currentTeam?.generation) {
       setGeneration(currentTeam.generation);
@@ -90,7 +83,7 @@ const TeamCreate = () => {
     },
   });
 
-  const { fields, append } = useFieldArray({
+  const { fields } = useFieldArray({
     name: "team",
     control: form.control,
   });
@@ -100,7 +93,7 @@ const TeamCreate = () => {
   };
 
   const addPokemon = () => {
-    append({ value: "Test" });
+    addTeamMember(id);
   };
 
   const filteredPokemon = useMemo(() => {
@@ -161,31 +154,20 @@ const TeamCreate = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="my-5">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-                {fields.map((_, index) => {
-                  return (
-                    <PokemonCard
-                      // field={field}
-                      filteredPokemon={filteredPokemon}
-                      key={index}
-                    />
-                  );
-                })}
                 {currentTeam && currentTeam.team.length > 0 ? (
                   currentTeam.team.map((team, index) => {
                     return (
-                      <div>
-                        <p>TYPE: {team.type}</p>
-                        <p>Name: {team.text}</p>
-                        <PokemonCard2
-                          filteredPokemon={filteredPokemon}
-                          pokemonId={team.value}
-                          key={index}
-                        />
-                      </div>
+                      <PokemonCard2
+                        filteredPokemon={filteredPokemon}
+                        pokemonId={team.id}
+                        orderIndex={index}
+                        pokeDetail={team}
+                        key={index}
+                      />
                     );
                   })
                 ) : (
-                  <p>no stuff</p>
+                  <p>No Pokemon selected.</p>
                 )}
               </div>
 
@@ -196,7 +178,7 @@ const TeamCreate = () => {
                   // "text-md tracking-tighter",
                   "my-3",
                 )}
-                disabled={fields.length === 6 || !Boolean(generation)}
+                disabled={!Boolean(generation) || teamTotal === 6}
               >
                 Add Pokemon
               </Button>

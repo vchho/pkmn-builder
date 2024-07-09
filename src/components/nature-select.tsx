@@ -1,4 +1,4 @@
-import { useEffect, useState, Dispatch, SetStateAction } from "react";
+import { useEffect, useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -15,26 +15,31 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { TPokemon } from "@/constants/pokemon";
 import { ScrollArea } from "./ui/scroll-area";
+import useStore from "@/store/store";
+import { Nature } from "@/types/nature";
 
-export function ComboboxDemo2({
-  filteredPokemon,
-  selectPokemon,
-  pokemonOne,
+export function NatureSelect({
+  natures,
+  teamId,
+  pokemonIndex,
+  nature,
 }: {
-  filteredPokemon: TPokemon[];
-  selectPokemon: Dispatch<SetStateAction<string>>;
-  pokemonOne: any;
+  natures: Nature[];
+  teamId: string;
+  pokemonIndex: number;
+  nature?: string;
 }) {
   const [open, setOpen] = useState(false);
-  const [value, setPokemonName] = useState("");
+  const [setNature, setValue] = useState("");
+
+  const addNatureToSlot = useStore((state) => state.addNatureToSlot);
 
   useEffect(() => {
-    if (pokemonOne) {
-      setPokemonName(pokemonOne.text);
+    if (nature) {
+      setValue(nature);
     }
-  }, [pokemonOne]);
+  }, [nature]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -46,37 +51,36 @@ export function ComboboxDemo2({
           // className="w-[300px] justify-between"
           className="w-{90%} mx-1 justify-between"
         >
-          {value
-            ? filteredPokemon.find((pokemon) => pokemon.text === value)?.text
-            : "Select Pokemon..."}
+          {setNature
+            ? natures.find((nature) => nature.text === setNature)?.text
+            : "Select Nature..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[300px] p-0">
         <Command>
-          <CommandInput placeholder="Search Pokemon..." />
+          <CommandInput placeholder="Search Nature..." />
           {/* https://github.com/shadcn-ui/ui/issues/607 */}
           <ScrollArea className="h-[220px] overflow-auto">
             <CommandEmpty>No game found.</CommandEmpty>
             <CommandGroup>
-              {filteredPokemon.map((pokemon) => (
+              {natures.map((nature) => (
                 <CommandItem
-                  key={pokemon.value}
-                  value={pokemon.text}
+                  key={nature.value}
+                  value={nature.text}
                   onSelect={(currentValue) => {
-                    console.log("current VAlue in combo box", currentValue);
-                    setPokemonName(currentValue === value ? "" : pokemon.text);
-                    selectPokemon(currentValue);
+                    setValue(currentValue === setNature ? "" : nature.text);
+                    addNatureToSlot(teamId, currentValue, pokemonIndex);
                     setOpen(false);
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === pokemon.text ? "opacity-100" : "opacity-0",
+                      setNature === nature.text ? "opacity-100" : "opacity-0",
                     )}
                   />
-                  {pokemon.text}
+                  {nature.text}
                 </CommandItem>
               ))}
             </CommandGroup>
