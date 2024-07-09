@@ -18,22 +18,25 @@ import {
 import { ScrollArea } from "./ui/scroll-area";
 import useStore from "@/store/store";
 import { Nature } from "@/types/nature";
+import { PokemonDetail } from "@/types/AppState";
 
 export function NatureSelect({
   natures,
   teamId,
   pokemonIndex,
   nature,
+  pokeDetail,
 }: {
   natures: Nature[];
   teamId: string;
   pokemonIndex: number;
   nature?: string;
+  pokeDetail: PokemonDetail;
 }) {
   const [open, setOpen] = useState(false);
   const [setNature, setValue] = useState("");
 
-  const addNatureToSlot = useStore((state) => state.addNatureToSlot);
+  const changeTeamMemberInfo = useStore((state) => state.changeTeamMemberInfo);
 
   useEffect(() => {
     if (nature) {
@@ -49,7 +52,8 @@ export function NatureSelect({
           role="combobox"
           aria-expanded={open}
           // className="w-[300px] justify-between"
-          className="w-{90%} mx-1 justify-between"
+          className="w-full justify-between"
+          // className="w-{90%} mx-1 justify-between"
         >
           {setNature
             ? natures.find((nature) => nature.text === setNature)?.text
@@ -57,20 +61,24 @@ export function NatureSelect({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0">
+      {/* <PopoverContent className="w-[300px] p-0"> */}
+      <PopoverContent className="w-full p-0">
         <Command>
           <CommandInput placeholder="Search Nature..." />
           {/* https://github.com/shadcn-ui/ui/issues/607 */}
+          {/* <ScrollArea className="h-[220px] overflow-auto"> */}
           <ScrollArea className="h-[220px] overflow-auto">
             <CommandEmpty>No game found.</CommandEmpty>
             <CommandGroup>
               {natures.map((nature) => (
                 <CommandItem
                   key={nature.value}
-                  value={nature.text}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === setNature ? "" : nature.text);
-                    addNatureToSlot(teamId, currentValue, pokemonIndex);
+                  onSelect={() => {
+                    setValue(nature.text);
+                    changeTeamMemberInfo(teamId, pokemonIndex, {
+                      ...pokeDetail,
+                      nature: nature.text,
+                    });
                     setOpen(false);
                   }}
                 >
