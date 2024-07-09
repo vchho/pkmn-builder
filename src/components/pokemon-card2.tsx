@@ -11,6 +11,9 @@ import { Button } from "./ui/button";
 import { NatureSelect } from "./nature-select";
 import NATURES from "@/constants/natures";
 import { Label } from "@/components/ui/label";
+import { AbilitiesSelect } from "./abilities-select";
+import ABILITIES from "@/constants/abilities";
+import { PokemonDetail } from "@/types/AppState";
 
 const PokemonCard2 = ({
   filteredPokemon,
@@ -21,7 +24,7 @@ const PokemonCard2 = ({
   filteredPokemon: TPokemon[];
   pokemonId: number;
   orderIndex: number;
-  pokeDetail?: any;
+  pokeDetail?: PokemonDetail;
 }) => {
   const [pokemon, selectPokemon] = useState("");
 
@@ -86,6 +89,15 @@ const PokemonCard2 = ({
               teamId={id}
               pokemonIndex={orderIndex}
               nature={pokeDetail?.nature ?? ""}
+              pokeDetail={pokeDetail!}
+            />
+
+            <AbilitiesSelect
+              abilities={ABILITIES}
+              teamId={id}
+              pokemonIndex={orderIndex}
+              ability={pokeDetail?.ability ?? ""}
+              pokeDetail={pokeDetail!}
             />
 
             <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
