@@ -17,32 +17,36 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "./ui/scroll-area";
 import useStore from "@/store/store";
-import { Nature } from "@/types/nature";
 import { PokemonDetail } from "@/types/AppState";
 
-export function NatureSelect({
-  natures,
+export function AbilitiesSelect({
+  abilities,
   teamId,
   pokemonIndex,
-  nature,
+  ability,
   pokeDetail,
 }: {
-  natures: Nature[];
+  abilities: {
+    id: string;
+    name: string;
+    description: string;
+    generation: string;
+  }[];
   teamId: string;
   pokemonIndex: number;
-  nature?: string;
+  ability?: string;
   pokeDetail: PokemonDetail;
 }) {
   const [open, setOpen] = useState(false);
-  const [setNature, setValue] = useState("");
+  const [setAbility, setValue] = useState("");
 
   const changeTeamMemberInfo = useStore((state) => state.changeTeamMemberInfo);
 
   useEffect(() => {
-    if (nature) {
-      setValue(nature);
+    if (ability) {
+      setValue(ability);
     }
-  }, [nature]);
+  }, [ability]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -55,29 +59,29 @@ export function NatureSelect({
           className="w-full justify-between"
           // className="w-{90%} mx-1 justify-between"
         >
-          {setNature
-            ? natures.find((nature) => nature.text === setNature)?.text
-            : "Select Nature..."}
+          {setAbility
+            ? abilities.find((ability) => ability.name === setAbility)?.name
+            : "Select Ability..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       {/* <PopoverContent className="w-[300px] p-0"> */}
       <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput placeholder="Search Nature..." />
+          <CommandInput placeholder="Search Ability..." />
           {/* https://github.com/shadcn-ui/ui/issues/607 */}
           {/* <ScrollArea className="h-[220px] overflow-auto"> */}
           <ScrollArea className="h-[220px] overflow-auto">
             <CommandEmpty>No game found.</CommandEmpty>
             <CommandGroup>
-              {natures.map((nature) => (
+              {abilities.map((ability) => (
                 <CommandItem
-                  key={nature.value}
+                  key={ability.name}
                   onSelect={() => {
-                    setValue(nature.text);
+                    setValue(ability.name);
                     changeTeamMemberInfo(teamId, pokemonIndex, {
                       ...pokeDetail,
-                      nature: nature.text,
+                      ability: ability.name,
                     });
                     setOpen(false);
                   }}
@@ -85,10 +89,10 @@ export function NatureSelect({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      setNature === nature.text ? "opacity-100" : "opacity-0",
+                      setAbility === ability.name ? "opacity-100" : "opacity-0",
                     )}
                   />
-                  {nature.text}
+                  {ability.name}
                 </CommandItem>
               ))}
             </CommandGroup>

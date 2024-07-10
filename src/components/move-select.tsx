@@ -17,32 +17,40 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "./ui/scroll-area";
 import useStore from "@/store/store";
-import { Nature } from "@/types/nature";
 import { PokemonDetail } from "@/types/AppState";
+import { Move } from "@/types/move";
 
-export function NatureSelect({
-  natures,
+export function MoveSelect({
+  moves,
   teamId,
   pokemonIndex,
-  nature,
   pokeDetail,
+  moveIndex,
+  moveInformation,
+  item,
 }: {
-  natures: Nature[];
+  moves: Move[];
   teamId: string;
   pokemonIndex: number;
-  nature?: string;
   pokeDetail: PokemonDetail;
+  moveIndex: number;
+  moveInformation: number[];
+  item?: string;
 }) {
   const [open, setOpen] = useState(false);
-  const [setNature, setValue] = useState("");
+  const [existingMove, setMove] = useState("");
 
   const changeTeamMemberInfo = useStore((state) => state.changeTeamMemberInfo);
 
   useEffect(() => {
-    if (nature) {
-      setValue(nature);
+    if (item) {
+      const foundMove = moves.find((move) => String(move.id) === item);
+
+      if (foundMove) {
+        setMove(foundMove.name);
+      }
     }
-  }, [nature]);
+  }, [item]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -51,33 +59,36 @@ export function NatureSelect({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          // className="w-[300px] justify-between"
-          className="w-full justify-between"
           // className="w-{90%} mx-1 justify-between"
+          className="w-full justify-between"
         >
-          {setNature
-            ? natures.find((nature) => nature.text === setNature)?.text
-            : "Select Nature..."}
+          {existingMove
+            ? moves.find((item) => item.name === existingMove)?.name
+            : "Select a move"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      {/* <PopoverContent className="w-[300px] p-0"> */}
-      <PopoverContent className="w-full p-0">
+      <PopoverContent className="w-[300px] p-0">
         <Command>
-          <CommandInput placeholder="Search Nature..." />
+          <CommandInput placeholder="Search for a move" />
           {/* https://github.com/shadcn-ui/ui/issues/607 */}
-          {/* <ScrollArea className="h-[220px] overflow-auto"> */}
           <ScrollArea className="h-[220px] overflow-auto">
-            <CommandEmpty>No game found.</CommandEmpty>
+            <CommandEmpty>No move found.</CommandEmpty>
             <CommandGroup>
-              {natures.map((nature) => (
+              {moves.map((move) => (
                 <CommandItem
-                  key={nature.value}
+                  key={move.name}
+                  value={move.name}
                   onSelect={() => {
-                    setValue(nature.text);
+                    setMove(move.name);
                     changeTeamMemberInfo(teamId, pokemonIndex, {
                       ...pokeDetail,
-                      nature: nature.text,
+                      // Adding move based on the set moveIndex so we can appropriately set our moves
+                      moves: [
+                        ...moveInformation.slice(0, moveIndex),
+                        move.id,
+                        ...moveInformation.slice(moveIndex),
+                      ],
                     });
                     setOpen(false);
                   }}
@@ -85,10 +96,10 @@ export function NatureSelect({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      setNature === nature.text ? "opacity-100" : "opacity-0",
+                      existingMove === move.name ? "opacity-100" : "opacity-0",
                     )}
                   />
-                  {nature.text}
+                  {move.name}
                 </CommandItem>
               ))}
             </CommandGroup>
