@@ -32,7 +32,7 @@ const Settings = () => {
   // https://stackoverflow.com/questions/55830414/how-to-read-text-file-in-react
   const readFile = (file: File) => {
     if (file.type !== "application/json") {
-      alert("Please enter in a valid JSON file");
+      alert("Please import a valid JSON file.");
     } else {
       const reader = new FileReader();
       reader.onload = () => {
@@ -56,9 +56,7 @@ const Settings = () => {
     const jsonData = new Blob([localData!], {
       type: "application/json",
     });
-    // const jsonData = new Blob([data!], {
-    //   type: "application/json",
-    // });
+
     const jsonURL = URL.createObjectURL(jsonData);
     const link = document.createElement("a");
     link.href = jsonURL;
