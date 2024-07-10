@@ -24,19 +24,21 @@ import { useMemo } from "react";
 import PokemonImage from "./pokemon-image";
 import { Separator } from "./ui/separator";
 
+type AccordionInfo = {
+  pokemonId: number;
+  pokeDetail: PokemonDetail;
+  teamId: string;
+  orderIndex: number;
+  currentGeneration?: string;
+};
+
 export function AccordionInfo({
   pokemonId,
   pokeDetail,
   teamId,
   orderIndex,
   currentGeneration,
-}: {
-  pokemonId: number;
-  pokeDetail: PokemonDetail;
-  teamId: string;
-  orderIndex: number;
-  currentGeneration?: string;
-}) {
+}: AccordionInfo) {
   const { id } = useParams() as { id: string };
   const pokemon = POKEMAP.get(pokemonId);
 
@@ -107,6 +109,15 @@ export function AccordionInfo({
             />
           </>
         ) : null}
+        {currentGeneration === "2" && (
+          <HeldItemSelect
+            items={ITEMS2}
+            teamId={teamId}
+            pokemonIndex={orderIndex}
+            item={pokeDetail.item ?? ""}
+            pokeDetail={pokeDetail}
+          />
+        )}
         <Separator className="my-4" />
         <MoveSelect
           moves={filteredMoves}

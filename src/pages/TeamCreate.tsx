@@ -24,24 +24,23 @@ import { Label } from "@/components/ui/label";
 import { POKEMON } from "@/constants/pokemon";
 
 import useStore from "@/store/store";
-import { useShallow } from "zustand/react/shallow";
 import { AccordionContainer } from "@/components/accordion-container";
 import AddPokemonModal from "@/components/pokemon-add-modal";
 import { ShowBack } from "@/components/show-back";
 import { Textarea } from "@/components/ui/textarea";
 
 const TeamCreate = () => {
-  const [generation, setGeneration] = useState("");
+  const [_, setGeneration] = useState("");
 
   const setGenerationStore = useStore((state) => state.setGeneration);
   const setNotes = useStore((state) => state.setNotes);
 
   const { id } = useParams() as { id: string };
-  const currentTeam = useStore(
-    useShallow((state) => {
-      return state.teams.find((team) => team.teamId === id);
-    }),
-  );
+  const currentTeam = useStore((state) => {
+    return state.teams.find((team) => team.teamId === id);
+  });
+
+  const teamSize = currentTeam?.team.length;
 
   useEffect(() => {
     if (currentTeam?.generation) {
@@ -120,7 +119,11 @@ const TeamCreate = () => {
 
           <AccordionContainer />
 
-          <AddPokemonModal filteredPokemon={filteredPokemon} teamId={id} />
+          <AddPokemonModal
+            filteredPokemon={filteredPokemon}
+            teamId={id}
+            teamSize={teamSize!}
+          />
         </CardContent>
       </Card>
     </Shell>

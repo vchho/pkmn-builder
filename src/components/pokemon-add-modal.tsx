@@ -20,9 +20,11 @@ import useStore from "@/store/store";
 export default function AddPokemonModal({
   filteredPokemon,
   teamId,
+  teamSize,
 }: {
   filteredPokemon: TPokemon[];
   teamId: string;
+  teamSize: number;
 }) {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,7 +34,7 @@ export default function AddPokemonModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="default" className="mt-5">
+        <Button variant="default" className="mt-5" disabled={teamSize === 6}>
           Add Pokemon
         </Button>
       </DialogTrigger>
