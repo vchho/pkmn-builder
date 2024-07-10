@@ -3,7 +3,7 @@ import useStore from "@/store/store";
 import { useParams } from "react-router-dom";
 import { AccordionInfo } from "./accordion-info";
 
-export function AccordionDemo() {
+export function AccordionContainer() {
   const { id } = useParams() as { id: string };
 
   const currentTeam = useStore((state) => {
@@ -20,6 +20,7 @@ export function AccordionDemo() {
               pokeDetail={t}
               teamId={id}
               orderIndex={index}
+              currentGeneration={currentTeam.generation}
             />
           );
         })
