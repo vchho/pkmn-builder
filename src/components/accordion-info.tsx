@@ -109,6 +109,15 @@ export function AccordionInfo({
             />
           </>
         ) : null}
+        {currentGeneration === "2" && (
+          <HeldItemSelect
+            items={ITEMS2}
+            teamId={teamId}
+            pokemonIndex={orderIndex}
+            item={pokeDetail.item ?? ""}
+            pokeDetail={pokeDetail}
+          />
+        )}
         <Separator className="my-4" />
         <MoveSelect
           moves={filteredMoves}
