@@ -1,4 +1,4 @@
-import { BarChart, HardDriveDownload, List } from "lucide-react";
+import { BarChart, HardDriveDownload, List, Settings } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
 import { useLocation } from "react-router-dom";
 
@@ -12,6 +12,11 @@ const teacherRoutes = [
     icon: BarChart,
     label: "Analytics",
     href: "/analytics",
+  },
+  {
+    icon: Settings,
+    label: "Settings",
+    href: "/settings",
   },
   {
     icon: HardDriveDownload,
