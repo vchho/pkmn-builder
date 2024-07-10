@@ -1,5 +1,5 @@
 import { Shell } from "@/components/shell";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import useStore from "@/store/store";
 import { Link } from "react-router-dom";
@@ -8,7 +8,6 @@ import { nanoid } from "nanoid";
 const Home = () => {
   const addTeam = useStore((state) => state.addTeam);
   const teams = useStore((state) => state.teams);
-  const nukeTeams = useStore((state) => state.nukeTeams);
 
   const id = nanoid();
 
@@ -24,12 +23,6 @@ const Home = () => {
       >
         Create Team
       </Link>
-      <Button
-        className={cn(buttonVariants({ variant: "destructive" }))}
-        onClick={() => nukeTeams()}
-      >
-        Reset Teams
-      </Button>
 
       <div>Teams</div>
 

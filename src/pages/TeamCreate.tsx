@@ -1,5 +1,4 @@
 import { Shell } from "@/components/shell";
-import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,10 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { Link, useParams } from "react-router-dom";
-
-import { z } from "zod";
+import { useParams } from "react-router-dom";
 
 import {
   Select,
@@ -30,24 +26,7 @@ import useStore from "@/store/store";
 import { useShallow } from "zustand/react/shallow";
 import { AccordionContainer } from "@/components/accordion-container";
 import AddPokemonModal from "@/components/pokemon-add-modal";
-
-export const ShowBack = ({ href }: { href: string }) => {
-  return (
-    <Link
-      to={href}
-      className={cn(buttonVariants({ variant: "link" }), "w-fit px-0")}
-    >
-      Go back
-    </Link>
-  );
-};
-
-export const CreateTeamSchema = z.object({
-  gameVersion: z.string().min(3).max(150),
-  team: z.array(z.object({ value: z.string() })),
-});
-
-export type CreateTeamValidatorType = z.infer<typeof CreateTeamSchema>;
+import { ShowBack } from "@/components/show-back";
 
 const TeamCreate = () => {
   const [generation, setGeneration] = useState("");
