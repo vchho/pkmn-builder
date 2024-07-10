@@ -78,7 +78,7 @@ export function MoveSelect({
               {moves.map((move) => (
                 <CommandItem
                   key={move.name}
-                  value={String(move.id)}
+                  value={move.name}
                   onSelect={() => {
                     setMove(move.name);
                     changeTeamMemberInfo(teamId, pokemonIndex, {
