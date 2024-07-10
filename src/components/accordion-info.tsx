@@ -24,19 +24,21 @@ import { useMemo } from "react";
 import PokemonImage from "./pokemon-image";
 import { Separator } from "./ui/separator";
 
+type AccordionInfo = {
+  pokemonId: number;
+  pokeDetail: PokemonDetail;
+  teamId: string;
+  orderIndex: number;
+  currentGeneration?: string;
+};
+
 export function AccordionInfo({
   pokemonId,
   pokeDetail,
   teamId,
   orderIndex,
   currentGeneration,
-}: {
-  pokemonId: number;
-  pokeDetail: PokemonDetail;
-  teamId: string;
-  orderIndex: number;
-  currentGeneration?: string;
-}) {
+}: AccordionInfo) {
   const { id } = useParams() as { id: string };
   const pokemon = POKEMAP.get(pokemonId);
 
