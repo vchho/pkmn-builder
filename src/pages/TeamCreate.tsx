@@ -1,3 +1,5 @@
+import { useEffect, useMemo, useState } from "react";
+
 import { Shell } from "@/components/shell";
 import {
   Card,
@@ -19,7 +21,6 @@ import {
 } from "@/components/ui/select";
 import { GAMES } from "@/constants/games";
 import { Label } from "@/components/ui/label";
-import { useEffect, useMemo, useState } from "react";
 import { POKEMON } from "@/constants/pokemon";
 
 import useStore from "@/store/store";
@@ -27,11 +28,13 @@ import { useShallow } from "zustand/react/shallow";
 import { AccordionContainer } from "@/components/accordion-container";
 import AddPokemonModal from "@/components/pokemon-add-modal";
 import { ShowBack } from "@/components/show-back";
+import { Textarea } from "@/components/ui/textarea";
 
 const TeamCreate = () => {
   const [generation, setGeneration] = useState("");
 
   const setGenerationStore = useStore((state) => state.setGeneration);
+  const setNotes = useStore((state) => state.setNotes);
 
   const { id } = useParams() as { id: string };
   const currentTeam = useStore(
@@ -98,6 +101,21 @@ const TeamCreate = () => {
                 </SelectGroup>
               </SelectContent>
             </Select>
+
+            <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Notes
+            </Label>
+            <Textarea
+              onChange={(e) => {
+                // TODO: Figure out how to debounce this text
+                setNotes(id, e.target.value);
+              }}
+              value={currentTeam?.notes ?? currentTeam?.notes}
+            />
+            <p className="flex text-sm text-slate-500 dark:text-slate-400">
+              Have some finer details of your team you might not be able to
+              remember? Write it down!
+            </p>
           </div>
 
           <AccordionContainer />
