@@ -17,8 +17,6 @@ const useStore = create<AppState>()(
             state.teams.push(teamState);
           });
         },
-        // TODO: add team member based on object
-        // TODO: create update team member where they can add or update pokemon
         addTeamMember: (teamId: string) => {
           set((state) => {
             const currentTeam = state.teams.find(
@@ -32,47 +30,22 @@ const useStore = create<AppState>()(
             currentTeam?.team.push(updatedPokemon);
           });
         },
-        addPokemonToSlot: (
-          teamId: string,
-          pokemonIndex?: number,
-          poke?: any,
-        ) => {
+
+        addPokemonToSlot2: (teamId: string, poke: number) => {
           set((state) => {
             const currentTeam = state.teams.find(
               (team) => team.teamId === teamId,
             );
 
-            let currentPokemon = currentTeam?.team[pokemonIndex!];
-
-            let asdf = {
-              ...currentPokemon,
+            const pokemon = {
               id: poke,
+              moves: [] as number[],
             };
 
-            // @ts-ignore
-            currentTeam!.team[pokemonIndex!] = asdf;
-          });
-        },
-        addNatureToSlot: (
-          teamId: string,
-          nature: string,
-          pokemonIndex?: number,
-        ) => {
-          console.log({ teamId, nature, pokemonIndex });
-          set((state) => {
-            const currentTeam = state.teams.find(
-              (team) => team.teamId === teamId,
-            );
-
-            let currentPokemon = currentTeam?.team[pokemonIndex!];
-            let updatedInfo = {
-              ...currentPokemon,
-              // TODO: resesarch why text is lowercased
-              nature: nature.charAt(0).toUpperCase() + nature.slice(1),
-            };
-
-            // @ts-ignore
-            currentTeam!.team[pokemonIndex!] = updatedInfo;
+            if (currentTeam) {
+              // @ts-ignore
+              currentTeam.team.push(pokemon);
+            }
           });
         },
         changeTeamMemberInfo: (

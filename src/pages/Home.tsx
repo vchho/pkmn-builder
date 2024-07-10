@@ -36,7 +36,9 @@ const Home = () => {
       {teams.map((team) => {
         return (
           <div key={team.teamId}>
-            <Link to={`create/${team.teamId}`}>{team.teamId}</Link>
+            <Link to={`create/${team.teamId}`}>
+              Generation: {team.generation} - {team.teamId}
+            </Link>
           </div>
         );
       })}

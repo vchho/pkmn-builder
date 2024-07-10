@@ -1,13 +1,8 @@
 export type AppState = {
   teams: { teamId: string; generation: string; team: PokemonDetail[] }[];
   addTeamMember: (teamId: string) => void;
-  addPokemonToSlot: (teamId: string, pokemonIndex?: number, poke?: any) => void;
+  addPokemonToSlot2: (teamId: string, poke: any) => void;
   addTeam: (teamId: string) => void;
-  addNatureToSlot: (
-    teamId: string,
-    nature: string,
-    pokemonIndex?: number,
-  ) => void;
   changeTeamMemberInfo: (
     teamId: string,
     pokemonIndex: number,

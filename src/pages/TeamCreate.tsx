@@ -1,5 +1,5 @@
 import { Shell } from "@/components/shell";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -11,9 +11,7 @@ import { cn } from "@/lib/utils";
 import { Link, useParams } from "react-router-dom";
 
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
-import { Form } from "@/components/ui/form";
+
 import {
   Select,
   SelectContent,
@@ -25,13 +23,13 @@ import {
 } from "@/components/ui/select";
 import { GAMES } from "@/constants/games";
 import { Label } from "@/components/ui/label";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { POKEMON } from "@/constants/pokemon";
 
 import useStore from "@/store/store";
 import { useShallow } from "zustand/react/shallow";
-import PokemonCard2 from "@/components/pokemon-card2";
-import { AccordionDemo } from "@/components/accordion-demo";
+import { AccordionContainer } from "@/components/accordion-container";
+import AddPokemonModal from "@/components/pokemon-add-modal";
 
 export const ShowBack = ({ href }: { href: string }) => {
   return (
@@ -50,14 +48,11 @@ export const CreateTeamSchema = z.object({
 });
 
 export type CreateTeamValidatorType = z.infer<typeof CreateTeamSchema>;
-// TODO: Have state pull in information from Zustand for teams
+
 const TeamCreate = () => {
   const [generation, setGeneration] = useState("");
 
   const setGenerationStore = useStore((state) => state.setGeneration);
-  const addTeamMember = useStore(
-    useCallback((state) => state.addTeamMember, []),
-  );
 
   const { id } = useParams() as { id: string };
   const currentTeam = useStore(
@@ -66,44 +61,21 @@ const TeamCreate = () => {
     }),
   );
 
-  const teamTotal = currentTeam?.team.length;
-
   useEffect(() => {
     if (currentTeam?.generation) {
       setGeneration(currentTeam.generation);
     }
-  }, []);
-
-  const form = useForm<CreateTeamValidatorType>({
-    resolver: zodResolver(CreateTeamSchema),
-    defaultValues: {
-      gameVersion: "",
-      team: [],
-    },
-  });
-
-  const { fields } = useFieldArray({
-    name: "team",
-    control: form.control,
-  });
-
-  const onSubmit = (content: z.infer<typeof CreateTeamSchema>) => {
-    console.log(content);
-  };
-
-  const addPokemon = () => {
-    addTeamMember(id);
-  };
+  }, [currentTeam?.generation]);
 
   const filteredPokemon = useMemo(() => {
     const filtered = POKEMON.filter((pokemon) =>
-      Number(generation) > 0
-        ? Number(pokemon.generation) <= Number(generation)
+      Number(currentTeam?.generation) > 0
+        ? Number(pokemon.generation) <= Number(currentTeam?.generation)
         : true,
     );
 
     return filtered;
-  }, [generation]);
+  }, [currentTeam?.generation]);
 
   return (
     <Shell>
@@ -149,43 +121,9 @@ const TeamCreate = () => {
             </Select>
           </div>
 
-          {/* <Separator className="my-5" /> */}
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="my-5">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-                {currentTeam && currentTeam.team.length > 0 ? (
-                  currentTeam.team.map((team, index) => {
-                    return (
-                      <PokemonCard2
-                        filteredPokemon={filteredPokemon}
-                        pokemonId={team.id}
-                        orderIndex={index}
-                        pokeDetail={team}
-                        key={index}
-                      />
-                    );
-                  })
-                ) : (
-                  <p>No Pokemon selected.</p>
-                )}
-              </div>
-              <AccordionDemo />
+          <AccordionContainer />
 
-              <Button
-                onClick={() => addPokemon()}
-                className={cn(
-                  buttonVariants({ variant: "destructive" }),
-                  // "text-md tracking-tighter",
-                  "my-3",
-                )}
-                disabled={!Boolean(generation) || teamTotal === 6}
-              >
-                Add Pokemon
-              </Button>
-
-              <Button className="my-5">Create</Button>
-            </form>
-          </Form>
+          <AddPokemonModal filteredPokemon={filteredPokemon} teamId={id} />
         </CardContent>
       </Card>
     </Shell>
