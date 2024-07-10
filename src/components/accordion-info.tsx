@@ -21,6 +21,8 @@ import { useParams } from "react-router-dom";
 import { MoveSelect } from "./move-select";
 import { MOVES } from "@/constants/moves";
 import { useMemo } from "react";
+import PokemonImage from "./pokemon-image";
+import { Separator } from "./ui/separator";
 
 export function AccordionInfo({
   pokemonId,
@@ -56,6 +58,9 @@ export function AccordionInfo({
     <AccordionItem value={`${accordionKey}`}>
       <AccordionTrigger>{pokemon?.text}</AccordionTrigger>
       <AccordionContent>
+        <div className="m-2">
+          <PokemonImage pokemonName={pokemon?.text!} />
+        </div>
         <div className="flex">
           <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             TYPE (S):
@@ -102,6 +107,7 @@ export function AccordionInfo({
             />
           </>
         ) : null}
+        <Separator className="my-4" />
         <MoveSelect
           moves={filteredMoves}
           teamId={teamId}
