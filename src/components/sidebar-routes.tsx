@@ -1,8 +1,7 @@
-import { BarChart, HardDriveDownload, List, Settings } from "lucide-react";
+import { BarChart, List, Settings } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
-import { useLocation } from "react-router-dom";
 
-const teacherRoutes = [
+const routes = [
   {
     icon: List,
     label: "Teams",
@@ -18,19 +17,12 @@ const teacherRoutes = [
     label: "Settings",
     href: "/settings",
   },
-  {
-    icon: HardDriveDownload,
-    label: "Importer / Exporter",
-    href: "/exporter",
-  },
 ];
 
 export const SidebarRoutes = () => {
-  const location = useLocation();
-
   return (
     <div className="flex w-full flex-col">
-      {teacherRoutes.map((route) => (
+      {routes.map((route) => (
         <SidebarItem
           key={route.href}
           icon={route.icon}

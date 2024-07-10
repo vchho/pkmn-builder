@@ -3,7 +3,6 @@ import MainContainer from "../pages/MainContainer";
 import Analytics from "../pages/Analytics";
 import TeamsContainer from "../pages/TeamsContainer";
 import TeamCreate from "../pages/TeamCreate";
-import Exporter from "../pages/Exporter";
 import Settings from "../pages/Settings";
 
 import { createBrowserRouter } from "react-router-dom";
@@ -25,10 +24,6 @@ export const router = createBrowserRouter([
       {
         path: "/analytics",
         element: <Analytics />,
-      },
-      {
-        path: "/exporter",
-        element: <Exporter />,
       },
       {
         path: "/settings",
