@@ -11,7 +11,12 @@ const useStore = create<AppState>()(
       immer((set) => ({
         teams: [],
         addTeam: (teamId: string) => {
-          const teamState = { teamId: teamId, generation: "", team: [] };
+          const teamState = {
+            teamId: teamId,
+            generation: "",
+            team: [],
+            notes: "",
+          };
 
           set((state) => {
             state.teams.push(teamState);
@@ -86,6 +91,15 @@ const useStore = create<AppState>()(
             state.teams.forEach((team) => {
               if (teamId === team.teamId) {
                 team.generation = generation;
+              }
+            });
+          });
+        },
+        setNotes: (teamId: string, notes: string) => {
+          set((state) => {
+            state.teams.forEach((team) => {
+              if (teamId === team.teamId) {
+                team.notes = notes;
               }
             });
           });

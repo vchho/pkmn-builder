@@ -11,7 +11,7 @@ export function AccordionContainer() {
   });
 
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion type="single" collapsible className="my-4 w-full">
       {currentTeam && currentTeam.team.length > 0 ? (
         currentTeam.team.map((t, index) => {
           return (
@@ -25,7 +25,7 @@ export function AccordionContainer() {
           );
         })
       ) : (
-        <p>No Pokemon selected.</p>
+        <p>No Pokemon added</p>
       )}
     </Accordion>
   );
