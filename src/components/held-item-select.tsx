@@ -23,14 +23,18 @@ export function HeldItemSelect({
   items,
   teamId,
   pokemonIndex,
-  item,
   pokeDetail,
+  item,
 }: {
-  items: any[];
+  items: {
+    key: string;
+    text: string;
+    value: string;
+  }[];
   teamId: string;
   pokemonIndex: number;
-  item?: string;
   pokeDetail: PokemonDetail;
+  item?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [setItem, setValue] = useState("");
