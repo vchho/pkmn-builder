@@ -68,11 +68,11 @@ const useStore = create<AppState>()(
             }
           });
         },
-        deleteTeam: (teamId: string) => {
-          set((state) => {
-            // state.teams.map((team) => );
-          });
-        },
+        // deleteTeam: (teamId: string) => {
+        //   set((state) => {
+        //     // state.teams.map((team) => );
+        //   });
+        // },
         deleteTeamMember: (teamId: string, pokemonIndex: number) => {
           set((state) => {
             state.teams
