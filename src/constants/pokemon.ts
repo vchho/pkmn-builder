@@ -1,4 +1,4 @@
-import { Type } from './moves';
+import { Type } from "@/types/move";
 
 export interface TPokemon {
   dualtype?: Type;

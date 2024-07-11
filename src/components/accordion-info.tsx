@@ -14,7 +14,7 @@ import ABILITIES from "@/constants/abilities";
 
 import { NatureSelect } from "./nature-select";
 import { AbilitiesSelect } from "./abilities-select";
-import { ITEMS2 } from "@/constants/items";
+import { ITEMS } from "@/constants/items";
 import { HeldItemSelect } from "./held-item-select";
 import useStore from "@/store/store";
 import { useParams } from "react-router-dom";
@@ -101,7 +101,8 @@ export function AccordionInfo({
               pokeDetail={pokeDetail}
             />
             <HeldItemSelect
-              items={ITEMS2}
+              // @ts-ignore
+              items={ITEMS[parseInt(currentGeneration)]}
               teamId={teamId}
               pokemonIndex={orderIndex}
               item={pokeDetail.item ?? ""}
@@ -111,7 +112,8 @@ export function AccordionInfo({
         ) : null}
         {currentGeneration === "2" && (
           <HeldItemSelect
-            items={ITEMS2}
+            // @ts-ignore
+            items={ITEMS[parseInt(currentGeneration)]}
             teamId={teamId}
             pokemonIndex={orderIndex}
             item={pokeDetail.item ?? ""}
