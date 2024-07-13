@@ -1,20 +1,13 @@
 import { useRef } from "react";
 
 import { Shell } from "@/components/shell";
-import { ShowBack } from "@/components/show-back";
 import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import useStore from "@/store/store";
 import { Input } from "@/components/ui/input";
+import { Header } from "@/components/header";
 
 const Settings = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
@@ -68,66 +61,58 @@ const Settings = () => {
 
   return (
     <Shell>
-      <Card className="flex h-full flex-col">
-        <CardHeader className="flex-1">
-          <ShowBack href="/" />
-          <CardTitle>Settings</CardTitle>
-          <CardDescription className="line-clamp-2">
-            Misc settings
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="">
-            <div className="">
-              <Label>Import / Export Data</Label>
-              <p className="flex text-sm text-slate-500 dark:text-slate-400">
-                Want to use your team data onto another browser or have team
-                data from another browser? Use this tool!
-              </p>
-              <div className="my-2">
-                <Input
-                  id="picture"
-                  type="file"
-                  style={{ display: "none" }}
-                  ref={inputFile}
-                  onChange={(a) => {
-                    const file = a.target.files![0];
-                    readFile(file);
-                  }}
-                />
-                <Button
-                  className={cn("mr-2", buttonVariants({ variant: "default" }))}
-                  onClick={() => onButtonClick()}
-                >
-                  Import
-                </Button>
-                <Button
-                  onClick={() => downloadJSON("pkmn-builder")}
-                  className={cn(buttonVariants({ variant: "default" }))}
-                >
-                  Export
-                </Button>
-              </div>
-            </div>
-            <Separator className="my-2" />
-            <div className="">
-              <Label className="flex">Delete all teams</Label>
-              <p className="flex text-sm text-slate-500 dark:text-slate-400">
-                Don't like your teams? Lets nuke them.
-              </p>
-              <Button
-                className={cn(
-                  "my-2",
-                  buttonVariants({ variant: "destructive" }),
-                )}
-                onClick={() => nukeTeams()}
-              >
-                Reset Teams
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <Header title="Settings" />
+
+      <Separator />
+
+      <div>
+        <h2 className="font-heading mt-12 scroll-m-20 pb-2 text-2xl font-semibold tracking-tight first:mt-0">
+          Import / Export Data
+        </h2>
+        <p className="leading-7 text-slate-500 dark:text-slate-400">
+          Want to use your team data onto another browser or have team data from
+          another browser? Use this tool!
+        </p>
+        <div className="my-2">
+          <Input
+            id="picture"
+            type="file"
+            style={{ display: "none" }}
+            ref={inputFile}
+            onChange={(a) => {
+              const file = a.target.files![0];
+              readFile(file);
+            }}
+          />
+          <Button
+            className={cn("mr-2", buttonVariants({ variant: "default" }))}
+            onClick={() => onButtonClick()}
+          >
+            Import
+          </Button>
+          <Button
+            onClick={() => downloadJSON("pkmn-builder")}
+            className={cn(buttonVariants({ variant: "default" }))}
+          >
+            Export
+          </Button>
+        </div>
+        <Separator className="my-4" />
+
+        <h2 className="font-heading scroll-m-20 pb-2 text-2xl font-semibold tracking-tight first:mt-0">
+          Delete all teams
+        </h2>
+        {/* <p className="flex text-sm font-light text-slate-500 dark:text-slate-400"> */}
+        <p className="leading-7">Don't like your teams? Lets nuke them.</p>
+        <Button
+          className={cn("my-2", buttonVariants({ variant: "destructive" }))}
+          onClick={() => nukeTeams()}
+        >
+          Reset Teams
+        </Button>
+
+        <Separator className="my-4" />
+      </div>
     </Shell>
   );
 };
