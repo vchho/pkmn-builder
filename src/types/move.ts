@@ -15,8 +15,7 @@ export type Type =
   | "GHOST"
   | "DARK"
   | "DRAGON"
-  | "STEEL"
-  | "FAIRY";
+  | "STEEL";
 
 type Category = "Physical" | "Special" | "Status" | "???";
 
