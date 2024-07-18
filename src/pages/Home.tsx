@@ -19,6 +19,8 @@ const TeamCard = ({
       to={`create/${teamId}`}
       className={cn(
         `relative col-span-1 rounded-md sm:col-span-2`,
+        // `transform-gpu overflow-hidden blur-3xl lg:ml-24 xl:ml-48 relative col-span-1 rounded-md sm:col-span-2`,
+        // `relative col-span-1 transform-gpu overflow-hidden rounded-md blur-3xl sm:col-span-2`,
         generationColors[generation],
       )}
       key={teamId}
