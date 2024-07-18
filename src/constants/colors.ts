@@ -22,5 +22,4 @@ export const TYPE_COLOR: TypeColor = {
   DARK: "#5B5366",
   DRAGON: "#0070CA",
   STEEL: "#598FA3",
-  FAIRY: "#FB8AEC",
 };

@@ -2039,7 +2039,7 @@ export const MOVES: Move[] = [
   {
     id: 186,
     name: "Sweet Kiss",
-    type: "FAIRY",
+    type: "NORMAL",
     category: "Status",
     contest: "Cute",
     pp: "10",
@@ -2237,7 +2237,7 @@ export const MOVES: Move[] = [
   {
     id: 204,
     name: "Charm",
-    type: "FAIRY",
+    type: "NORMAL",
     category: "Status",
     contest: "Cute",
     pp: "20",
@@ -2589,7 +2589,7 @@ export const MOVES: Move[] = [
   {
     id: 236,
     name: "Moonlight",
-    type: "FAIRY",
+    type: "NORMAL",
     category: "Status",
     contest: "Beautiful",
     pp: "5",
