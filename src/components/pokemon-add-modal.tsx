@@ -53,7 +53,7 @@ export default function AddPokemonModal({
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <ScrollArea className="flex-1 overflow-auto p-4">
+        <ScrollArea className="flex-1 overflow-auto p-2">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {filteredPokemon
               .filter((p) =>
@@ -71,7 +71,6 @@ export default function AddPokemonModal({
                   <CardContent className="flex flex-col items-center gap-2 pt-5">
                     <PokemonImage pokemonName={p.text} />
                     <h3 className="text-lg font-semibold">{p.text}</h3>
-                    {/* <p className="text-sm text-muted-foreground">{p.description}</p> */}
                   </CardContent>
                 </Card>
               ))}
