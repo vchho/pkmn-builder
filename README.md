@@ -1,4 +1,14 @@
+# Acknowledgements
+
+This project was _heavily_ inspired by [Diego Ballesteros](https://github.com/diballesteros) project, [nuzlocke](https://github.com/diballesteros/nuzlocke). Give him a follow / star on his project.
+
 # Setup
+
+Install `pnpm`
+
+```bash
+npm install -g pnpm
+```
 
 Install dependencies
 
