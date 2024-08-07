@@ -13,6 +13,7 @@ export type AppState = {
     pokemonIndex: number,
     detail: PokemonDetail,
   ) => void;
+  deleteTeam: (teamIndex: number) => void;
   deleteTeamMember: (teamId: string, pokemonIndex: number) => void;
   nukeTeams: () => void;
   setGeneration: (generation: string, teamId: string) => void;
