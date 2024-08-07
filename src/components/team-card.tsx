@@ -37,7 +37,7 @@ const TeamCard = ({
         />
       </div>
 
-      <div className="relative m-1 flex flex-col items-start gap-2 text-white">
+      <div className="relative flex flex-col items-start gap-2 text-white">
         <h3 className="text-2xl font-bold text-black">
           Generation: {generation}
         </h3>
