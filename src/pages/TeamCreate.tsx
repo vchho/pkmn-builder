@@ -8,29 +8,28 @@ const TeamCreate = () => {
   return (
     <Shell>
       <Card className="">
-        <Tabs defaultValue="all">
+        <Tabs defaultValue="buider">
           <div className="px-4 py-2">
             <TabsList className="ml-auto">
               <TabsTrigger
-                value="all"
+                value="buider"
                 className="text-zinc-600 dark:text-zinc-200"
               >
                 Team Builder
               </TabsTrigger>
               <TabsTrigger
-                value="unread"
+                value="stats"
                 className="text-zinc-600 dark:text-zinc-200"
               >
                 Stats
               </TabsTrigger>
             </TabsList>
           </div>
-          <TabsContent value="all">
+          <TabsContent value="buider">
             <TeamBuilder />
           </TabsContent>
-          <TabsContent value="unread" className="m-0">
+          <TabsContent value="stats" className="m-0">
             <h1>Stats</h1>
-            {/* <MailList items={mails.filter((item) => !item.read)} /> */}
           </TabsContent>
         </Tabs>
       </Card>
