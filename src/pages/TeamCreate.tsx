@@ -33,7 +33,6 @@ const TeamCreate = () => {
             {/* <MailList items={mails.filter((item) => !item.read)} /> */}
           </TabsContent>
         </Tabs>
-        {/* </div> */}
       </Card>
     </Shell>
   );
