@@ -23,6 +23,7 @@ import { MOVES } from "@/constants/moves";
 import { useMemo } from "react";
 import PokemonImage from "./pokemon-image";
 import { Separator } from "./ui/separator";
+import { Nature } from "@/types/nature";
 
 type AccordionInfo = {
   pokemonId: number;
@@ -30,6 +31,28 @@ type AccordionInfo = {
   teamId: string;
   orderIndex: number;
   currentGeneration?: string;
+};
+
+const NatureDisplay = (nature: { nature: string }) => {
+  const findNature = (nature: string): Nature | undefined => {
+    return NATURES.find((n) => {
+      if (n.key === nature) {
+        return n;
+      }
+    });
+  };
+
+  return (
+    <div className="flex">
+      <p className="text-emerald-500">
+        Increase: {findNature(nature.nature)?.increased}{" "}
+      </p>
+      <p className="text-red-500">
+        {" "}
+        Decreased: {findNature(nature.nature)?.decreased}
+      </p>
+    </div>
+  );
 };
 
 export function AccordionInfo({
@@ -86,13 +109,16 @@ export function AccordionInfo({
         <div className="my-4 flex"></div>
         {currentGeneration !== "1" && currentGeneration !== "2" ? (
           <>
-            <NatureSelect
-              natures={NATURES}
-              teamId={teamId}
-              pokemonIndex={orderIndex}
-              nature={pokeDetail?.nature ?? ""}
-              pokeDetail={pokeDetail}
-            />
+            <div className="flex flex-wrap">
+              <NatureSelect
+                natures={NATURES}
+                teamId={teamId}
+                pokemonIndex={orderIndex}
+                nature={pokeDetail?.nature ?? ""}
+                pokeDetail={pokeDetail}
+              />
+              <NatureDisplay nature={pokeDetail?.nature ?? ""} />
+            </div>
             <AbilitiesSelect
               abilities={ABILITIES}
               teamId={teamId}
