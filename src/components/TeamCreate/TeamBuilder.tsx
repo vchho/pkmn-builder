@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import {
   CardContent,
@@ -30,6 +30,14 @@ import useStore from "@/store/store";
 
 import { POKEMON } from "@/constants/pokemon";
 
+const debounce = (func: Function, delay: number) => {
+  let timeoutId: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func(...args), delay);
+  };
+};
+
 const TeamBuilder = () => {
   const [_, setGeneration] = useState("");
 
@@ -41,6 +49,8 @@ const TeamBuilder = () => {
   const currentTeam = useStore((state) => {
     return state.teams.find((team) => team.teamId === id);
   });
+
+  const [inputValue, setInputValue] = useState(currentTeam?.notes || "");
 
   const teamSize = currentTeam?.team.length;
 
@@ -59,6 +69,17 @@ const TeamBuilder = () => {
 
     return filtered;
   }, [currentTeam?.generation]);
+
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+    debouncedSetNotes(value);
+  };
+
+  const debouncedSetNotes = useCallback(
+    debounce((value: string) => setNotes(id, value), 1000),
+    [id, setNotes]
+  );
 
   return (
     <>
@@ -106,11 +127,8 @@ const TeamBuilder = () => {
             Notes
           </Label>
           <Textarea
-            onChange={(e) => {
-              // TODO: Figure out how to debounce this text
-              setNotes(id, e.target.value);
-            }}
-            value={currentTeam?.notes ?? currentTeam?.notes}
+            onChange={handleTextareaChange}
+            value={inputValue}
           />
           <p className="flex text-sm text-slate-500 dark:text-slate-400">
             Have some finer details of your team you might not be able to

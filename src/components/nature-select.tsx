@@ -52,7 +52,7 @@ export function NatureSelect({
           role="combobox"
           aria-expanded={open}
           // className="w-[300px] justify-between"
-          className="w-full justify-between"
+          className="w-2/4 justify-between"
           // className="w-{90%} mx-1 justify-between"
         >
           {setNature
