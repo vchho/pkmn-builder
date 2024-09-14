@@ -24,7 +24,6 @@ export type PokemonDetail = {
   ability?: string;
   id: number;
   item?: string;
-  level: number;
   moves: number[];
   nature?: string;
 };
