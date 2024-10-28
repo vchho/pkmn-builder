@@ -1,6 +1,5 @@
 import { Header } from "@/components/header";
 import { Shell } from "@/components/shell";
-import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -21,26 +20,26 @@ import { POKEMAP } from "@/constants/pokemon";
 import useStore from "@/store/store";
 import { Fragment } from "react";
 
-const typeColors = {
-  Normal: "bg-gray-400",
-  Fire: "bg-red-500",
-  Water: "bg-blue-500",
-  Electric: "bg-yellow-400",
-  Grass: "bg-green-500",
-  Ice: "bg-cyan-300",
-  Fighting: "bg-red-700",
-  Poison: "bg-purple-500",
-  Ground: "bg-yellow-700",
-  Flying: "bg-indigo-400",
-  Psychic: "bg-pink-500",
-  Bug: "bg-lime-500",
-  Rock: "bg-yellow-800",
-  Ghost: "bg-purple-700",
-  Dragon: "bg-indigo-700",
-  Dark: "bg-gray-700",
-  Steel: "bg-gray-500",
-  Fairy: "bg-pink-300",
-};
+// const typeColors = {
+//   Normal: "bg-gray-400",
+//   Fire: "bg-red-500",
+//   Water: "bg-blue-500",
+//   Electric: "bg-yellow-400",
+//   Grass: "bg-green-500",
+//   Ice: "bg-cyan-300",
+//   Fighting: "bg-red-700",
+//   Poison: "bg-purple-500",
+//   Ground: "bg-yellow-700",
+//   Flying: "bg-indigo-400",
+//   Psychic: "bg-pink-500",
+//   Bug: "bg-lime-500",
+//   Rock: "bg-yellow-800",
+//   Ghost: "bg-purple-700",
+//   Dragon: "bg-indigo-700",
+//   Dark: "bg-gray-700",
+//   Steel: "bg-gray-500",
+//   Fairy: "bg-pink-300",
+// };
 
 const Analytics = () => {
   const teams = useStore((state) => state.teams);
