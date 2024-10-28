@@ -78,7 +78,7 @@ const TeamBuilder = () => {
 
   const debouncedSetNotes = useCallback(
     debounce((value: string) => setNotes(id, value), 1000),
-    [id, setNotes]
+    [id, setNotes],
   );
 
   return (
@@ -126,10 +126,7 @@ const TeamBuilder = () => {
           <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             Notes
           </Label>
-          <Textarea
-            onChange={handleTextareaChange}
-            value={inputValue}
-          />
+          <Textarea onChange={handleTextareaChange} value={inputValue} />
           <p className="flex text-sm text-slate-500 dark:text-slate-400">
             Have some finer details of your team you might not be able to
             remember? Write it down!

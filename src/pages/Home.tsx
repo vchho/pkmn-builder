@@ -20,16 +20,20 @@ const Home = () => {
 
       {/* <div className="relative mx-auto grid w-full grid-flow-row-dense grid-cols-2 gap-x-8 gap-y-6 px-6 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-10 xl:gap-x-10 xl:px-0"> */}
       <div className="relative mx-auto grid w-full grid-flow-row-dense grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4 md:grid-cols-6">
-        {teams.map((team, index) => {
-          return (
-            <TeamCard
-              teamId={team.teamId}
-              generation={team.generation}
-              teamIndex={index}
-              key={team.teamId}
-            />
-          );
-        })}
+        {teams.length > 0 ? (
+          teams.map((team, index) => {
+            return (
+              <TeamCard
+                teamId={team.teamId}
+                generation={team.generation}
+                teamIndex={index}
+                key={team.teamId}
+              />
+            );
+          })
+        ) : (
+          <p>You haven't created any teams yet.</p>
+        )}
       </div>
       <Link
         to={`create/${id}`}

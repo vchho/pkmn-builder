@@ -16,6 +16,7 @@ export function AccordionContainer() {
         currentTeam.team.map((t, index) => {
           return (
             <AccordionInfo
+              key={t.id}
               pokemonId={t.id}
               pokeDetail={t}
               teamId={id}
