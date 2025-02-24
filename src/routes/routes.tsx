@@ -6,6 +6,7 @@ import TeamCreate from "../pages/TeamCreate";
 import Settings from "../pages/Settings";
 
 import { createBrowserRouter } from "react-router-dom";
+import Guides from "@/pages/Guides";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
       {
         path: "/analytics",
         element: <Analytics />,
+      },
+      {
+        path: "/guides",
+        element: <Guides />,
       },
       {
         path: "/settings",
