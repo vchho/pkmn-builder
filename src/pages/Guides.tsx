@@ -12,7 +12,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search } from "lucide-react";
-import { TM, gen1Tms, gen2Tms, gen3TMs } from "@/lib/tms";
+import { TM, gen1Tms, gen2Tms, gen3TMs, gen4TMs } from "@/lib/tms";
 import { PokemonTypeBadge } from "@/components/pokemon-type-badge";
 
 type PokemonGames = {
@@ -65,7 +65,7 @@ const pokemonGames: PokemonGames[] = [
   {
     name: "Pokémon Ruby, Sapphire, Emerald",
     generation: 3,
-    releaseYear: 2022,
+    releaseYear: 2002,
     tms: gen3TMs,
     hiddenItems: [
       { id: "HI001", name: "Poké Ball", location: "Cabo Poco" },
@@ -76,8 +76,8 @@ const pokemonGames: PokemonGames[] = [
   {
     name: "Pokémon Diamond, Pearl, Platinum",
     generation: 4,
-    releaseYear: 2022,
-    tms: gen1Tms,
+    releaseYear: 2008,
+    tms: gen4TMs,
     hiddenItems: [
       { id: "HI001", name: "Poké Ball", location: "Cabo Poco" },
       { id: "HI002", name: "Potion", location: "Mesagoza" },
@@ -87,7 +87,7 @@ const pokemonGames: PokemonGames[] = [
   {
     name: "Pokémon Black, White, Black 2, White 2",
     generation: 5,
-    releaseYear: 2022,
+    releaseYear: 2010,
     tms: gen1Tms,
     hiddenItems: [
       { id: "HI001", name: "Poké Ball", location: "Cabo Poco" },
