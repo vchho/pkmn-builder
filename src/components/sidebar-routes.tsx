@@ -1,4 +1,4 @@
-import { BarChart, List, Settings } from "lucide-react";
+import { BarChart, List, Settings, Album } from "lucide-react";
 import { SidebarItem } from "./sidebar-item";
 
 const routes = [
@@ -11,6 +11,11 @@ const routes = [
     icon: BarChart,
     label: "Analytics",
     href: "/analytics",
+  },
+  {
+    icon: Album,
+    label: "Guides",
+    href: "/guides",
   },
   {
     icon: Settings,

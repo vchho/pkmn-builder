@@ -17,7 +17,7 @@ export type Type =
   | "DRAGON"
   | "STEEL";
 
-type Category = "Physical" | "Special" | "Status" | "???";
+export type Category = "Physical" | "Special" | "Status" | "???";
 
 export type Move = {
   accuracy: string;
