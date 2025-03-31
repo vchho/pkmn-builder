@@ -170,9 +170,13 @@ function GameContent({
         />
       </div>
       <Tabs defaultValue="tms">
-        <TabsList>
-          <TabsTrigger value="tms">TMs</TabsTrigger>
-          <TabsTrigger value="hidden-items">Hidden Items</TabsTrigger>
+        <TabsList className="w-full">
+          <TabsTrigger value="tms" className="flex-1">
+            TMs
+          </TabsTrigger>
+          <TabsTrigger value="hidden-items" className="flex-1">
+            Hidden Items
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="tms">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -220,17 +224,15 @@ const Guides = () => {
   return (
     <Shell>
       <Header title="Guides" />
-      <div className="container mx-auto p-4">
+      <div className="w-full p-4">
         <Accordion type="single" collapsible className="w-full">
           {pokemonGames.map((game) => (
             <AccordionItem key={game.name} value={game.name}>
-              <AccordionTrigger>
-                <div className="flex items-center">
+              <AccordionTrigger className="flex justify-start text-left">
+                <div className="flex flex-wrap items-center gap-2">
                   <span>{game.name}</span>
-                  <Badge variant="secondary" className="ml-2">
-                    Gen {game.generation}
-                  </Badge>
-                  <span className="text-muted-foreground ml-2 text-sm">
+                  <Badge variant="secondary">Gen {game.generation}</Badge>
+                  <span className="text-muted-foreground text-sm">
                     ({game.releaseYear})
                   </span>
                 </div>
