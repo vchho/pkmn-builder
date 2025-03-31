@@ -12,7 +12,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search } from "lucide-react";
-import { TM, gen1Tms, gen2Tms, gen3TMs, gen4TMs, gen5TMs } from "@/lib/tms";
+import {
+  TM,
+  bw2Tms,
+  gen1Tms,
+  gen2Tms,
+  gen3TMs,
+  gen4TMs,
+  gen5TMs,
+} from "@/lib/tms";
 import { PokemonTypeBadge } from "@/components/pokemon-type-badge";
 
 type PokemonGames = {
@@ -27,16 +35,6 @@ type HiddenItem = {
   id: string;
   name: string;
   location: string;
-};
-
-type GameContentProps = {
-  game: {
-    name: string;
-    generation: number;
-    releaseYear: number;
-    tms: TM[];
-    hiddenItems: HiddenItem[];
-  };
 };
 
 const pokemonGames: PokemonGames[] = [
@@ -85,10 +83,32 @@ const pokemonGames: PokemonGames[] = [
     ],
   },
   {
-    name: "Pokémon Black, White, Black 2, White 2",
+    name: "Pokémon Heart Gold and Soul Silver",
+    generation: 4,
+    releaseYear: 2010,
+    tms: gen4TMs,
+    hiddenItems: [
+      { id: "HI001", name: "Poké Ball", location: "Cabo Poco" },
+      { id: "HI002", name: "Potion", location: "Mesagoza" },
+      { id: "HI003", name: "Antidote", location: "South Province (Area One)" },
+    ],
+  },
+  {
+    name: "Pokémon Black and White",
     generation: 5,
     releaseYear: 2010,
     tms: gen5TMs,
+    hiddenItems: [
+      { id: "HI001", name: "Poké Ball", location: "Cabo Poco" },
+      { id: "HI002", name: "Potion", location: "Mesagoza" },
+      { id: "HI003", name: "Antidote", location: "South Province (Area One)" },
+    ],
+  },
+  {
+    name: "Pokémon Black 2, White 2",
+    generation: 5,
+    releaseYear: 2012,
+    tms: bw2Tms,
     hiddenItems: [
       { id: "HI001", name: "Poké Ball", location: "Cabo Poco" },
       { id: "HI002", name: "Potion", location: "Mesagoza" },
